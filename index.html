@@ -85,8 +85,8 @@
         <a href="#vendedores" class="btn btn-primary btn-sm">
           <span>Entrar no Time</span>
         </a>
-        <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação" style="display: inline-flex; align-items: center; justify-content: center;">
+          <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
         </button>
       </div>
     </div>
@@ -98,8 +98,8 @@
       <div class="brand-logo">
         <img src="assets/brand/logo Megazord 1.png" alt="Logo Megazord" style="height: 36px; width: auto;" />
       </div>
-      <button id="drawerClose" class="mobile-toggle" aria-label="Fechar menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <button id="drawerClose" class="mobile-toggle" aria-label="Fechar menu" style="display: inline-flex; align-items: center; justify-content: center;">
+        <i data-lucide="x" style="width: 22px; height: 22px;"></i>
       </button>
     </div>
     <ul class="drawer-links">
@@ -711,7 +711,7 @@
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
               <span>Como faço para me associar à Atlética Megazord?</span>
-              <span class="accordion-icon">+</span>
+              <i data-lucide="plus" class="accordion-icon" style="width: 18px; height: 18px; color: var(--text-muted);"></i>
             </button>
             <div class="accordion-content">
               <p>Para se associar, basta entrar em contato com nossa equipe ou preencher o formulário de cadastro. Associados possuem descontos exclusivos em eventos, uniformes oficiais e na rede de parceiros do Unileste.</p>
@@ -721,7 +721,7 @@
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
               <span>Quem pode participar das seletivas dos times esportivos?</span>
-              <span class="accordion-icon">+</span>
+              <i data-lucide="plus" class="accordion-icon" style="width: 18px; height: 18px; color: var(--text-muted);"></i>
             </button>
             <div class="accordion-content">
               <p>Qualquer estudante matriculado no Unileste (calouros ou veteranos) pode participar das seletivas e treinos abertos de todas as modalidades.</p>
@@ -731,7 +731,7 @@
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
               <span>Como funcionam os treinos e horários?</span>
-              <span class="accordion-icon">+</span>
+              <i data-lucide="plus" class="accordion-icon" style="width: 18px; height: 18px; color: var(--text-muted);"></i>
             </button>
             <div class="accordion-content">
               <p>Os treinos ocorrem semanalmente no complexo esportivo do Unileste e em ginásios parceiros da região. Os horários atualizados são divulgados no nosso perfil oficial do Instagram.</p>
@@ -775,9 +775,24 @@
         <div class="footer-col">
           <h5>Contato & Redes</h5>
           <ul class="footer-links">
-            <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://wa.me/5531999999999" target="_blank" rel="noopener">WhatsApp</a></li>
-            <li><a href="mailto:contato@atleticamegazord.com.br">E-mail Institucional</a></li>
+            <li>
+              <a href="https://instagram.com" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px;">
+                <i data-lucide="instagram" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a href="https://wa.me/5531999999999" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px;">
+                <i data-lucide="message-circle" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <a href="mailto:contato@atleticamegazord.com.br" style="display: inline-flex; align-items: center; gap: 8px;">
+                <i data-lucide="mail" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                E-mail Institucional
+              </a>
+            </li>
           </ul>
         </div>
 
