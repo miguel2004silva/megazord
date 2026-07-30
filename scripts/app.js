@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollEffects();
   initCookieBanner();
   initSportsTabs();
+  initBackgroundMusic();
 });
 
 /* --- 0. GLOBAL BACKGROUND VIDEO ENGINE --- */
@@ -538,5 +539,51 @@ function initSportsTabs() {
         targetContent.style.display = 'block';
       }
     });
+  });
+}
+
+/* --- 11. BACKGROUND MUSIC SYSTEM --- */
+function initBackgroundMusic() {
+  const audio = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicToggle');
+  const tooltip = btn?.querySelector('.music-tooltip');
+  
+  if (!audio || !btn) return;
+
+  // Tentar tocar no primeiro clique na página
+  const tryAutoPlay = () => {
+    audio.play().then(() => {
+      btn.classList.add('playing');
+      if (tooltip) tooltip.textContent = 'Pausar Trilha ⏸️';
+      removeInteractionListeners();
+    }).catch(err => {
+      console.log('Autoplay recusado pelo navegador. Aguardando interação direta.', err);
+    });
+  };
+
+  const removeInteractionListeners = () => {
+    document.removeEventListener('click', tryAutoPlay);
+    document.removeEventListener('touchstart', tryAutoPlay);
+  };
+
+  // Escuta interações globais para autoplay
+  document.addEventListener('click', tryAutoPlay);
+  document.addEventListener('touchstart', tryAutoPlay);
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Evitar disparar tryAutoPlay ao clicar no próprio botão
+    removeInteractionListeners();
+
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+      if (tooltip) tooltip.textContent = 'Pausar Trilha ⏸️';
+      showToast('Trilha sonora iniciada 🎵', 'success');
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+      if (tooltip) tooltip.textContent = 'Ativar Trilha 🎵';
+      showToast('Trilha sonora pausada', 'info');
+    }
   });
 }

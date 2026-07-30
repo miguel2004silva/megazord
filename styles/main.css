@@ -1281,3 +1281,96 @@ main, header, footer, .navbar {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- 21. FLOATING MUSIC CONTROLLER (PREMIUM SHADCN STYLE) --- */
+.music-controller-widget {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 100;
+}
+
+@media (min-width: 768px) {
+  .music-controller-widget {
+    bottom: 30px;
+  }
+}
+
+.music-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.music-toggle-btn:hover {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  transform: scale(1.05);
+}
+
+.music-toggle-btn:hover .music-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-8px);
+}
+
+.sound-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+  width: 19px;
+}
+
+.wave-bar {
+  width: 2.5px;
+  height: 100%;
+  background-color: #60a5fa;
+  border-radius: var(--radius-full);
+  transition: height 0.15s ease-out;
+}
+
+/* Animations when playing */
+.music-toggle-btn.playing .bar-1 { animation: bounce-wave 0.8s ease-in-out infinite alternate; }
+.music-toggle-btn.playing .bar-2 { animation: bounce-wave 0.5s ease-in-out infinite alternate 0.15s; }
+.music-toggle-btn.playing .bar-3 { animation: bounce-wave 0.7s ease-in-out infinite alternate 0.3s; }
+.music-toggle-btn.playing .bar-4 { animation: bounce-wave 0.6s ease-in-out infinite alternate 0.1s; }
+
+/* Flat states when paused */
+.bar-1 { height: 4px; }
+.bar-2 { height: 8px; }
+.bar-3 { height: 5px; }
+.bar-4 { height: 3px; }
+
+@keyframes bounce-wave {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+.music-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--border-card);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
