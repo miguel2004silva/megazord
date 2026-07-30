@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initCookieBanner();
   initSportsTabs();
   initBackgroundMusic();
+
+  // Initialize Lucide Icons
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 });
 
 /* --- 0. GLOBAL BACKGROUND VIDEO ENGINE --- */
@@ -495,8 +500,9 @@ function initCookieBanner() {
   `;
 
   banner.innerHTML = `
-    <p style="margin-bottom: 12px; color: #94a3b8; line-height: 1.5;">
-      🦁 <strong>Privacidade:</strong> Utilizamos cookies para otimizar sua experiência de navegação e análise da Megazord.
+    <p style="margin-bottom: 12px; color: #94a3b8; line-height: 1.5; display: flex; align-items: center; gap: 8px;">
+      <i data-lucide="cookie" class="icon-inline" style="color: #fb923c; flex-shrink: 0; width: 18px; height: 18px;"></i>
+      <span><strong>Privacidade:</strong> Utilizamos cookies para otimizar sua experiência de navegação e análise da Megazord.</span>
     </p>
     <div style="display: flex; gap: 10px; justify-content: flex-end;">
       <button id="acceptCookies" class="btn btn-primary btn-sm">Aceitar</button>
@@ -504,6 +510,10 @@ function initCookieBanner() {
   `;
 
   document.body.appendChild(banner);
+
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 
   document.getElementById('acceptCookies')?.addEventListener('click', () => {
     localStorage.setItem('megazord_lgpd_consent', 'true');
@@ -554,7 +564,7 @@ function initBackgroundMusic() {
   const tryAutoPlay = () => {
     audio.play().then(() => {
       btn.classList.add('playing');
-      if (tooltip) tooltip.textContent = 'Pausar Trilha ⏸️';
+      if (tooltip) tooltip.textContent = 'Pausar Trilha';
       removeInteractionListeners();
     }).catch(err => {
       console.log('Autoplay recusado pelo navegador. Aguardando interação direta.', err);
@@ -584,12 +594,12 @@ function initBackgroundMusic() {
     if (audio.paused) {
       audio.play();
       btn.classList.add('playing');
-      if (tooltip) tooltip.textContent = 'Pausar Trilha ⏸️';
-      showToast('Trilha sonora iniciada 🎵', 'success');
+      if (tooltip) tooltip.textContent = 'Pausar Trilha';
+      showToast('Trilha sonora iniciada', 'success');
     } else {
       audio.pause();
       btn.classList.remove('playing');
-      if (tooltip) tooltip.textContent = 'Ativar Trilha 🎵';
+      if (tooltip) tooltip.textContent = 'Ativar Trilha';
       showToast('Trilha sonora pausada', 'info');
     }
   });

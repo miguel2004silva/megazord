@@ -22,6 +22,9 @@
   <!-- Master CSS -->
   <link rel="stylesheet" href="styles/main.css" />
 
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
@@ -125,15 +128,24 @@
         </div>
 
         <div style="margin-bottom: var(--space-4);">
-          <span class="badge-pill">🦁 #TheLionIsInCharge — Unificada Unileste</span>
+          <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="crown" class="icon-inline" style="width: 14px; height: 14px; color: #fb923c;"></i>
+            #TheLionIsInCharge — Unificada Unileste
+          </span>
         </div>
 
         <h1 class="hero-title font-display text-gradient">Energia, união e competição.</h1>
         <p class="hero-subtitle">A plataforma oficial da Atlética Megazord para reunir atletas, organizar eventos, vestir o manto e celebrar cada conquista do Leão.</p>
         
         <div class="hero-ctas">
-          <a href="#produtos" class="btn btn-primary btn-lg">Vista a Cor da Atlética 👕</a>
-          <a href="#esportes" class="btn btn-secondary btn-lg">Ver Modalidades 🏆</a>
+          <a href="#produtos" class="btn btn-primary btn-lg" style="display: inline-flex; align-items: center; gap: 8px;">
+            Vista a Cor da Atlética
+            <i data-lucide="shopping-bag" class="icon-inline" style="width: 18px; height: 18px;"></i>
+          </a>
+          <a href="#esportes" class="btn btn-secondary btn-lg" style="display: inline-flex; align-items: center; gap: 8px;">
+            Ver Modalidades
+            <i data-lucide="trophy" class="icon-inline" style="width: 18px; height: 18px; color: #fb923c;"></i>
+          </a>
         </div>
       </div>
     </section>
@@ -162,9 +174,18 @@
 
         <!-- Tabs Navigation -->
         <div class="sports-tabs">
-          <button class="tab-btn active" data-tab="quadra">Quadra & Campo ⚽</button>
-          <button class="tab-btn" data-tab="individual">Individuais & Salão 🏃‍♂️</button>
-          <button class="tab-btn" data-tab="esports">E-sports & Alternativos 🎮</button>
+          <button class="tab-btn active" data-tab="quadra" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i data-lucide="trophy" class="icon-inline" style="width: 14px; height: 14px; color: var(--color-primary);"></i>
+            Quadra & Campo
+          </button>
+          <button class="tab-btn" data-tab="individual" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i data-lucide="zap" class="icon-inline" style="width: 14px; height: 14px; color: #fb923c;"></i>
+            Individuais & Salão
+          </button>
+          <button class="tab-btn" data-tab="esports" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i data-lucide="gamepad-2" class="icon-inline" style="width: 14px; height: 14px; color: #c084fc;"></i>
+            E-sports & Alternativos
+          </button>
         </div>
 
         <!-- Tab Content: Quadra & Campo -->
@@ -465,8 +486,14 @@
           <div class="lovable-card event-card">
             <div class="event-details">
               <div class="event-meta">
-                <span>📍 A definir</span>
-                <span>📅 20 a 23 de Novembro</span>
+                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                  <i data-lucide="map-pin" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                  A definir
+                </span>
+                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                  <i data-lucide="calendar" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                  20 a 23 de Novembro
+                </span>
               </div>
               <h3 class="event-title">JUV 2026</h3>
               <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Jogos Universitários de Verão! A Atlética Megazord disputa o título em diversas modalidades esportivas com garra e paixão.</p>
@@ -481,8 +508,14 @@
           <div class="lovable-card event-card">
             <div class="event-details">
               <div class="event-meta">
-                <span>📍 Campus Unileste</span>
-                <span>📅 22 de Agosto</span>
+                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                  <i data-lucide="map-pin" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                  Campus Unileste
+                </span>
+                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                  <i data-lucide="calendar" class="icon-inline" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+                  22 de Agosto
+                </span>
               </div>
               <h3 class="event-title">Recepção dos Calouros</h3>
               <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Integração oficial dos bixos! Apresentação dos times da atlética, entrega de kits e acolhimento para o início do semestre.</p>
@@ -757,7 +790,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 Atlética Megazord. Feito com ♥ para estudantes do Unileste.</p>
+        <p>&copy; 2026 Atlética Megazord. Feito com <i data-lucide="heart" class="icon-inline" style="width: 12px; height: 12px; color: #ef4444; margin: 0 2px;"></i> para estudantes do Unileste.</p>
         <p>Modelo visual inspirado na identidade oficial da Atlética Megazord.</p>
       </div>
     </div>
@@ -790,7 +823,7 @@
         <span class="wave-bar bar-3"></span>
         <span class="wave-bar bar-4"></span>
       </div>
-      <span class="music-tooltip">Ativar Trilha 🎵</span>
+      <span class="music-tooltip">Ativar Trilha</span>
     </button>
   </div>
 
