@@ -634,64 +634,97 @@
             <!-- Honeypot Field Anti-Spam -->
             <input type="text" id="hp_field" class="hp-field" tabindex="-1" autocomplete="off" />
 
+            <!-- Hidden Label for JS DOM reference compatibility -->
+            <label id="subAreaLabel" style="display: none;"></label>
+
             <div class="form-grid">
+              <!-- Nome Completo -->
               <div class="form-group">
-                <label for="fullName" class="form-label">Nome Completo *</label>
-                <input type="text" id="fullName" class="form-input" placeholder="Seu nome completo" required />
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="user" class="komadi-field-icon"></i>
+                  <input type="text" id="fullName" class="komadi-input" placeholder="Nome Completo *" required />
+                </div>
               </div>
 
+              <!-- E-mail -->
               <div class="form-group">
-                <label for="email" class="form-label">E-mail *</label>
-                <input type="email" id="email" class="form-input" placeholder="seuemail@exemplo.com" required />
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="mail" class="komadi-field-icon"></i>
+                  <input type="email" id="email" class="komadi-input" placeholder="E-mail *" required />
+                </div>
               </div>
 
+              <!-- WhatsApp com prefixo -->
               <div class="form-group">
-                <label for="phone" class="form-label">WhatsApp (DDD + Número) *</label>
-                <input type="tel" id="phone" class="form-input" placeholder="(31) 99999-9999" required />
+                <div class="komadi-field-wrapper">
+                  <div class="komadi-phone-prefix">
+                    <i data-lucide="phone" class="komadi-field-icon" style="position: static; transform: none;"></i>
+                    <span class="prefix-text">+55</span>
+                  </div>
+                  <input type="tel" id="phone" class="komadi-input pl-18" placeholder="DDD + Número *" required />
+                </div>
               </div>
 
+              <!-- Curso -->
               <div class="form-group">
-                <label for="course" class="form-label">Seu Curso no Unileste *</label>
-                <input type="text" id="course" class="form-input" placeholder="Ex: Engenharia / Direito" required />
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="graduation-cap" class="komadi-field-icon"></i>
+                  <input type="text" id="course" class="komadi-input" placeholder="Seu Curso no Unileste *" required />
+                </div>
               </div>
 
+              <!-- Período -->
               <div class="form-group">
-                <label for="period" class="form-label">Período *</label>
-                <select id="period" class="form-select" required>
-                  <option value="">Selecione seu período</option>
-                  <option value="1">1º Período (Bixo)</option>
-                  <option value="2">2º Período</option>
-                  <option value="3">3º Período</option>
-                  <option value="4">4º Período</option>
-                  <option value="5">5º Período ou superior</option>
-                  <option value="Formado">Ex-Aluno / Formado</option>
-                </select>
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="calendar" class="komadi-field-icon"></i>
+                  <select id="period" class="komadi-input" required>
+                    <option value="" disabled selected hidden>Selecione seu Período *</option>
+                    <option value="1">1º Período (Bixo)</option>
+                    <option value="2">2º Período</option>
+                    <option value="3">3º Período</option>
+                    <option value="4">4º Período</option>
+                    <option value="5">5º Período ou superior</option>
+                    <option value="Formado">Ex-Aluno / Formado</option>
+                  </select>
+                </div>
               </div>
 
+              <!-- Tipo de Membro -->
               <div class="form-group">
-                <label for="roleType" class="form-label">Tipo de Membro *</label>
-                <select id="roleType" class="form-select" required>
-                  <option value="">Selecione uma opção</option>
-                  <option value="atleta">Atleta</option>
-                  <option value="diretor">Diretor</option>
-                </select>
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="users" class="komadi-field-icon"></i>
+                  <select id="roleType" class="komadi-input" required>
+                    <option value="" disabled selected hidden>Tipo de Membro (Atleta / Diretor) *</option>
+                    <option value="atleta">Atleta</option>
+                    <option value="diretor">Diretor</option>
+                  </select>
+                </div>
               </div>
 
+              <!-- Dynamic Area/Sport (Atleta / Diretor options) -->
               <div id="subAreaGroup" class="form-group" style="display: none;">
-                <label id="subAreaLabel" for="subArea" class="form-label">Área / Modalidade *</label>
-                <select id="subArea" class="form-select">
-                  <!-- Opções carregadas via JS -->
-                </select>
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="target" class="komadi-field-icon"></i>
+                  <select id="subArea" class="komadi-input">
+                    <!-- Opções carregadas via JS -->
+                  </select>
+                </div>
               </div>
 
+              <!-- Motivação -->
               <div class="form-group full-width">
-                <label for="motivation" class="form-label">Por que você quer fazer parte da equipe Megazord? *</label>
-                <textarea id="motivation" class="form-textarea" rows="3" placeholder="Conte-nos brevemente sua motivação..." required></textarea>
+                <div class="komadi-field-wrapper">
+                  <i data-lucide="message-square" class="komadi-field-icon" style="top: 22px; transform: none;"></i>
+                  <textarea id="motivation" class="komadi-input" placeholder="Por que você quer fazer parte da equipe Megazord? *" required></textarea>
+                </div>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full btn-lg mt-6">
-              Enviar Inscrição para a Equipe
+            <button type="submit" class="komadi-submit-btn mt-6">
+              <span class="inline-flex items-center gap-2 group">
+                Enviar Inscrição para a Equipe
+                <i data-lucide="arrow-right" class="icon-inline" style="width: 17px; height: 17px; margin-left: 4px; transition: transform 0.15s ease;"></i>
+              </span>
             </button>
           </form>
         </div>
