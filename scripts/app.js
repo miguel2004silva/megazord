@@ -183,6 +183,66 @@ function initFormValidation() {
   const form = document.getElementById('sellerForm');
   if (!form) return;
 
+  // Controle de opções dinâmicas para Tipo de Membro (Atleta / Diretor)
+  const roleTypeEl = document.getElementById('roleType');
+  const subAreaGroupEl = document.getElementById('subAreaGroup');
+  const subAreaLabelEl = document.getElementById('subAreaLabel');
+  const subAreaEl = document.getElementById('subArea');
+
+  if (roleTypeEl && subAreaGroupEl && subAreaEl) {
+    roleTypeEl.addEventListener('change', () => {
+      const val = roleTypeEl.value;
+      subAreaEl.innerHTML = '';
+      
+      if (val === 'atleta') {
+        subAreaGroupEl.style.display = 'block';
+        subAreaLabelEl.textContent = 'Modalidade Esportiva *';
+        subAreaEl.required = true;
+        
+        const options = [
+          { value: '', text: 'Selecione a modalidade' },
+          { value: 'Futebol', text: 'Futebol de Campo' },
+          { value: 'Vôlei', text: 'Vôlei' },
+          { value: 'Basquete', text: 'Basquete' },
+          { value: 'Futsal', text: 'Futsal' },
+          { value: 'Handebol', text: 'Handebol' },
+          { value: 'Cheerleading', text: 'Cheerleading' }
+        ];
+        
+        options.forEach(opt => {
+          const el = document.createElement('option');
+          el.value = opt.value;
+          el.textContent = opt.text;
+          subAreaEl.appendChild(el);
+        });
+      } else if (val === 'diretor') {
+        subAreaGroupEl.style.display = 'block';
+        subAreaLabelEl.textContent = 'Diretoria de Interesse *';
+        subAreaEl.required = true;
+        
+        const options = [
+          { value: '', text: 'Selecione a diretoria' },
+          { value: 'Esportes', text: 'Esportes' },
+          { value: 'Marketing', text: 'Marketing' },
+          { value: 'Produtos', text: 'Produtos' },
+          { value: 'Eventos', text: 'Eventos' },
+          { value: 'Financeiro', text: 'Financeiro' },
+          { value: 'Comunicação', text: 'Comunicação & Redes' }
+        ];
+        
+        options.forEach(opt => {
+          const el = document.createElement('option');
+          el.value = opt.value;
+          el.textContent = opt.text;
+          subAreaEl.appendChild(el);
+        });
+      } else {
+        subAreaGroupEl.style.display = 'none';
+        subAreaEl.required = false;
+      }
+    });
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -197,6 +257,8 @@ function initFormValidation() {
     const phone = document.getElementById('phone').value.trim();
     const course = document.getElementById('course').value.trim();
     const period = document.getElementById('period').value;
+    const roleType = roleTypeEl ? roleTypeEl.value : '';
+    const subArea = subAreaEl ? subAreaEl.value : '';
 
     if (!fullName || fullName.length < 3) {
       showToast('Por favor, digite seu nome completo.', 'error');
@@ -210,6 +272,14 @@ function initFormValidation() {
       showToast('Por favor, digite seu número de WhatsApp com DDD.', 'error');
       return;
     }
+    if (roleTypeEl && !roleType) {
+      showToast('Por favor, selecione se deseja ser Atleta ou Diretor.', 'error');
+      return;
+    }
+    if (subAreaEl && subAreaEl.required && !subArea) {
+      showToast('Por favor, selecione a área ou modalidade.', 'error');
+      return;
+    }
 
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) {
@@ -220,12 +290,14 @@ function initFormValidation() {
     setTimeout(() => {
       showToast('Inscrição enviada com sucesso! Nossa equipe entrará em contato.', 'success');
       form.reset();
+      if (subAreaGroupEl) subAreaGroupEl.style.display = 'none';
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Enviar Inscrição para a Equipe';
       }
 
-      const msg = encodeURIComponent(`Olá! Gostaria de fazer parte da Equipe Megazord. Meu nome é ${fullName} (${course} - ${period}º Período). #TheLionIsInCharge`);
+      const roleDisplay = roleType === 'atleta' ? `Atleta (${subArea})` : `Diretor (${subArea})`;
+      const msg = encodeURIComponent(`Olá! Gostaria de fazer parte da Equipe Megazord como ${roleDisplay}. Meu nome é ${fullName} (${course} - ${period}º Período). #TheLionIsInCharge`);
       window.open(`https://wa.me/5531999999999?text=${msg}`, '_blank');
     }, 1200);
   });

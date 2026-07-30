@@ -73,14 +73,13 @@
         <li><a href="#esportes" class="nav-link">Modalidades</a></li>
         <li><a href="#eventos" class="nav-link">Eventos</a></li>
         <li><a href="#produtos" class="nav-link">Produtos</a></li>
-        <li><a href="#familia" class="nav-link">Comunidade</a></li>
         <li><a href="#vendedores" class="nav-link">Seja Vendedor</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
         <li><a href="#contato" class="nav-link">Contato</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a href="#familia" class="btn btn-primary btn-sm">
+        <a href="#vendedores" class="btn btn-primary btn-sm">
           <span>Entrar no Time</span>
         </a>
         <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação">
@@ -105,13 +104,12 @@
       <li><a href="#esportes" class="drawer-link">Modalidades</a></li>
       <li><a href="#eventos" class="drawer-link">Próximos Eventos</a></li>
       <li><a href="#produtos" class="drawer-link">Produtos Oficiais</a></li>
-      <li><a href="#familia" class="drawer-link">Comunidade</a></li>
       <li><a href="#vendedores" class="drawer-link">Faça Parte da Equipe</a></li>
       <li><a href="#faq" class="drawer-link">FAQ</a></li>
       <li><a href="#contato" class="drawer-link">Contato</a></li>
     </ul>
     <div style="margin-top: auto; padding-top: 20px;">
-      <a href="#familia" class="btn btn-primary w-full btn-lg">Entrar no Time</a>
+      <a href="#vendedores" class="btn btn-primary w-full btn-lg">Entrar no Time</a>
     </div>
   </div>
 
@@ -149,20 +147,10 @@
           <p class="section-description">Da quadra ao virtual, do campo à arena: escolha sua modalidade e venha fazer parte da equipe.</p>
         </div>
 
-        <!-- SHOWCASE SUB-MARCAS (MEGATERIA E MEGACHEERS) -->
-        <div class="subbrand-grid">
-          <!-- Megateria -->
-          <div class="lovable-card subbrand-card">
-            <img src="assets/megateria/Megateria UNILESTE Logo.png" alt="Megateria Unileste" class="subbrand-logo-img" />
-            <div>
-              <span class="badge-pill" style="font-size: 0.68rem; padding: 2px 10px;">Bateria Universitária</span>
-              <h4 class="font-display" style="font-size: 1.4rem; color: #fff; margin: 4px 0;">MEGATERIA UNILESTE</h4>
-              <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5;">O ritmo contagiante que conduz a nossa torcida nas arquibancadas dos torneios.</p>
-            </div>
-          </div>
-
+        <!-- SHOWCASE SUB-MARCAS (MEGACHEERS) -->
+        <div style="max-width: 600px; margin: 0 auto var(--space-8) auto;">
           <!-- MegaCheers -->
-          <div class="subbrand-card lovable-card">
+          <div class="subbrand-card lovable-card" style="display: flex; align-items: center; gap: var(--space-6);">
             <img src="assets/megacheers/Untitled design.png" alt="MegaCheers Unileste" class="subbrand-logo-img" />
             <div>
               <span class="badge-pill" style="font-size: 0.68rem; padding: 2px 10px;">Cheerleading</span>
@@ -279,9 +267,9 @@
               <h3 class="event-title">JUV 2026</h3>
               <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Jogos Universitários de Verão! A Atlética Megazord disputa o título em diversas modalidades esportivas com garra e paixão.</p>
               
-              <button class="btn btn-primary w-full" data-action="open-ticket-modal" data-event-name="JUV 2026">
+              <a href="https://www.instagram.com/jogosjuv/" target="_blank" class="btn btn-primary w-full text-center" style="display: block; text-decoration: none;">
                 Ver Detalhes do Evento
-              </button>
+              </a>
             </div>
           </div>
 
@@ -313,57 +301,18 @@
           <p class="section-description">Camisas, moletons e acessórios para você mostrar que faz parte do time.</p>
         </div>
 
-        <div class="store-grid">
-          <!-- Produto 1 -->
-          <div class="lovable-card product-card">
+        <div style="max-width: 600px; margin: 0 auto;">
+          <div class="lovable-card product-card" style="text-align: center; padding: var(--space-8); display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
             <div>
-              <span class="badge-pill">Manto Oficial</span>
-              <h3 class="product-title">Camisa Oficial 2026</h3>
-              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: var(--space-3);">Dry fit, escudo bordado e cores que representam a torcida.</p>
-              <div class="product-price">R$ 89,90</div>
+              <span class="badge-pill" style="margin-bottom: var(--space-3);">Lojinha Oficial Megazord</span>
+              <h3 class="product-title" style="font-size: 1.8rem; margin-bottom: var(--space-2);">Garanta seus Produtos do Leão</h3>
+              <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: var(--space-6); line-height: 1.6;">
+                Manto oficial, moletons, canecas, bonés e muito mais. Clique no botão abaixo para acessar nossa loja oficial e vestir o orgulho Megazord!
+              </p>
             </div>
-            <button class="btn btn-primary w-full" data-action="open-product-modal" data-product-name="Camisa Oficial 2026" data-product-price="R$ 89,90">
-              Garantir Camisa
-            </button>
-          </div>
-
-          <!-- Produto 2 -->
-          <div class="lovable-card product-card">
-            <div>
-              <span class="badge-pill">Moletom</span>
-              <h3 class="product-title">Moletom Atlética</h3>
-              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: var(--space-3);">Conforto para treino e dia a dia com estilo de time.</p>
-              <div class="product-price">R$ 149,90</div>
-            </div>
-            <button class="btn btn-primary w-full" data-action="open-product-modal" data-product-name="Moletom Atlética" data-product-price="R$ 149,90">
-              Garantir Moletom
-            </button>
-          </div>
-
-          <!-- Produto 3 -->
-          <div class="lovable-card product-card">
-            <div>
-              <span class="badge-pill">Acessório</span>
-              <h3 class="product-title">Boné Snapback</h3>
-              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: var(--space-3);">Ajustável, bordado frontal e fita de torcedor.</p>
-              <div class="product-price">R$ 49,90</div>
-            </div>
-            <button class="btn btn-primary w-full" data-action="open-product-modal" data-product-name="Boné Snapback" data-product-price="R$ 49,90">
-              Garantir Boné
-            </button>
-          </div>
-
-          <!-- Produto 4 -->
-          <div class="lovable-card product-card">
-            <div>
-              <span class="badge-pill">Caneca</span>
-              <h3 class="product-title">Caneca do Time</h3>
-              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: var(--space-3);">Para começar o dia com a energia da atlética.</p>
-              <div class="product-price">R$ 35,00</div>
-            </div>
-            <button class="btn btn-primary w-full" data-action="open-product-modal" data-product-name="Caneca do Time" data-product-price="R$ 35,00">
-              Garantir Caneca
-            </button>
+            <a href="https://loja.infinitepay.io/aj_figueredo" target="_blank" class="btn btn-primary w-full text-center" style="display: block; text-decoration: none; font-size: 1.1rem; padding: 14px var(--space-4);">
+              Acessar Loja Oficial 🛍️
+            </a>
           </div>
         </div>
       </div>
@@ -411,81 +360,25 @@
       <div class="container">
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-number" data-target="8">+0</div>
+            <div class="stat-number" data-target="3">+0</div>
             <div class="stat-label">Anos de Tradição</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" data-target="3500">+0</div>
-            <div class="stat-label">Alunos Unificados</div>
+            <div class="stat-number" data-target="350">+0</div>
+            <div class="stat-label">Alunos Participantes</div>
           </div>
           <div class="stat-card">
             <div class="stat-number" data-target="7">+0</div>
             <div class="stat-label">Modalidades</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" data-target="45">+0</div>
+            <div class="stat-number" data-target="15">+0</div>
             <div class="stat-label">Eventos & Torneios</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- COMUNIDADE & MASCOTINHOS SQUAD -->
-    <section id="familia" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="badge-pill">Comunidade</span>
-          <h2 class="section-title font-display">A família Megazord</h2>
-          <p class="section-description">A Megazord é a referência de acolhimento e identidade no Unileste. Amizades verdadeiras e o orgulho de fazer história juntos.</p>
-        </div>
-
-        <!-- MASCOTINHOS GRID -->
-        <div style="margin-bottom: var(--space-12);">
-          <div class="mascotinhos-grid">
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 1.png" alt="Mascotinho Atleta" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Atleta</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 2.png" alt="Mascotinho Torcedor" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Torcedor</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 3.png" alt="Mascotinho Baterista" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Baterista</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 4.png" alt="Mascotinho Comissário" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Comissário</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 5.png" alt="Mascotinho Estudante" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Estudante</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 6.png" alt="Mascotinho Capitão" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Capitão</span>
-            </div>
-            <div class="mascotinho-card">
-              <div class="mascotinho-avatar">
-                <img src="assets/mascotinhos/mascotinho megazord 7.png" alt="Mascotinho Líder" class="mascotinho-img" />
-              </div>
-              <span class="mascotinho-name">Líder</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -534,6 +427,22 @@
                   <option value="4">4º Período</option>
                   <option value="5">5º Período ou superior</option>
                   <option value="Formado">Ex-Aluno / Formado</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="roleType" class="form-label">Tipo de Membro *</label>
+                <select id="roleType" class="form-select" required>
+                  <option value="">Selecione uma opção</option>
+                  <option value="atleta">Atleta</option>
+                  <option value="diretor">Diretor</option>
+                </select>
+              </div>
+
+              <div id="subAreaGroup" class="form-group" style="display: none;">
+                <label id="subAreaLabel" for="subArea" class="form-label">Área / Modalidade *</label>
+                <select id="subArea" class="form-select">
+                  <!-- Opções carregadas via JS -->
                 </select>
               </div>
 
@@ -656,7 +565,7 @@
       <span style="font-family: var(--font-display); font-size: 1.1rem; color: #fff; display: block; font-weight: 800;">MEGAZORD</span>
       <span style="font-size: 0.75rem; color: #60a5fa; font-weight: 600;">Unificada Unileste</span>
     </div>
-    <a href="#familia" class="btn btn-primary btn-sm">Entrar no Time</a>
+    <a href="#vendedores" class="btn btn-primary btn-sm">Entrar no Time</a>
   </div>
 
   <!-- MODAL CONTAINER -->
