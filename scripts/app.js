@@ -31,6 +31,18 @@ function initBackgroundVideo() {
   video.loop = true;
   video.playsInline = true;
 
+  // Diagnostics check for format and loading errors
+  video.addEventListener('error', (e) => {
+    console.error('🚨 [VÍDEO DE FUNDO] Ocorreu um erro ao carregar o vídeo:', video.src);
+    if (video.error) {
+      console.error('Código do Erro:', video.error.code);
+      console.error('Mensagem do Erro:', video.error.message);
+      if (video.error.code === 4) {
+        console.warn('⚠️ DICA: O navegador não pôde decodificar o vídeo. Se você renomeou o arquivo .mov para .mp4 manualmente sem convertê-lo de verdade, o navegador não conseguirá ler o codec de vídeo QuickTime/Apple.');
+      }
+    }
+  });
+
   const playVideo = () => {
     const promise = video.play();
     if (promise !== undefined) {
