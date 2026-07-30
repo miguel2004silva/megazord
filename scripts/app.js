@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initScrollEffects();
   initCookieBanner();
+  initSportsTabs();
 });
 
 /* --- 0. GLOBAL BACKGROUND VIDEO ENGINE --- */
@@ -201,12 +202,25 @@ function initFormValidation() {
         
         const options = [
           { value: '', text: 'Selecione a modalidade' },
-          { value: 'Futebol', text: 'Futebol de Campo' },
-          { value: 'Vôlei', text: 'Vôlei' },
-          { value: 'Basquete', text: 'Basquete' },
+          { value: 'Atletismo', text: 'Atletismo' },
+          { value: 'Basquete 3x3', text: 'Basquete 3x3' },
+          { value: 'Futebol Society', text: 'Futebol Society' },
           { value: 'Futsal', text: 'Futsal' },
           { value: 'Handebol', text: 'Handebol' },
-          { value: 'Cheerleading', text: 'Cheerleading' }
+          { value: 'Natação', text: 'Natação' },
+          { value: 'Peteca', text: 'Peteca' },
+          { value: 'Tênis de Mesa', text: 'Tênis de Mesa' },
+          { value: 'Truco', text: 'Truco' },
+          { value: 'Voleibol', text: 'Voleibol' },
+          { value: 'Vôlei de Praia', text: 'Vôlei de Praia' },
+          { value: 'Futevôlei', text: 'Futevôlei' },
+          { value: 'Sinuca', text: 'Sinuca' },
+          { value: 'EAFC 26', text: 'EAFC 26' },
+          { value: 'Poker', text: 'Poker' },
+          { value: 'Xadrez', text: 'Xadrez' },
+          { value: 'Counter-Strike', text: 'Counter-Strike' },
+          { value: 'Valorant', text: 'Valorant' },
+          { value: 'League of Legends', text: 'League of Legends' }
         ];
         
         options.forEach(opt => {
@@ -494,5 +508,35 @@ function initCookieBanner() {
     localStorage.setItem('megazord_lgpd_consent', 'true');
     banner.remove();
     showToast('Preferências salvas.', 'success');
+  });
+}
+
+/* --- 10. SPORTS TABS CONTROLLER --- */
+function initSportsTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  if (tabBtns.length === 0) return;
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active from all buttons
+      tabBtns.forEach(b => b.classList.remove('active'));
+      // Add active to clicked button
+      btn.classList.add('active');
+
+      const targetTab = btn.getAttribute('data-tab');
+
+      // Hide all content tabs
+      tabContents.forEach(content => {
+        content.style.display = 'none';
+      });
+
+      // Show target content tab
+      const targetContent = document.getElementById(`tab-${targetTab}`);
+      if (targetContent) {
+        targetContent.style.display = 'block';
+      }
+    });
   });
 }

@@ -160,65 +160,266 @@
           </div>
         </div>
 
-        <div class="sports-grid">
-          <!-- Futebol -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Campo</span>
-              <h3 class="sport-name">Futebol</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Treinos semanais, times masculino e feminino, e muita disputa saudável.</p>
-            </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Futebol">Quero Treinar</button>
-          </div>
+        <!-- Tabs Navigation -->
+        <div class="sports-tabs">
+          <button class="tab-btn active" data-tab="quadra">Quadra & Campo ⚽</button>
+          <button class="tab-btn" data-tab="individual">Individuais & Salão 🏃‍♂️</button>
+          <button class="tab-btn" data-tab="esports">E-sports & Alternativos 🎮</button>
+        </div>
 
-          <!-- Vôlei -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Quadra</span>
-              <h3 class="sport-name">Vôlei</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Areia ou quadra: a garra do vôlei atlético está sempre em alta.</p>
+        <!-- Tab Content: Quadra & Campo -->
+        <div id="tab-quadra" class="tab-content active">
+          <div class="sports-grid">
+            <!-- Futsal -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretores: Carioca (M) / Nanath (F)</span>
+                </div>
+                <h3 class="sport-name">Futsal</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Treinos focados com forte competitividade e tradição em torneios regionais.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Futsal">Quero Treinar</button>
             </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Vôlei">Quero Treinar</button>
-          </div>
 
-          <!-- Basquete -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Quadra</span>
-              <h3 class="sport-name">Basquete</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Enterradas, três pontos e trabalho em equipe do início ao fim.</p>
+            <!-- Voleibol -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretores: Miguel & Gustavo (M)</span>
+                </div>
+                <h3 class="sport-name">Voleibol</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Trabalho tático, entrosamento em quadra e união definem nosso vôlei.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Voleibol">Quero Treinar</button>
             </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Basquete">Quero Treinar</button>
-          </div>
 
-          <!-- Futsal -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Quadra</span>
-              <h3 class="sport-name">Futsal</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Tradição de títulos em quadra com intensidade e ritmo acelerado.</p>
+            <!-- Basquete 3x3 -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Lorenzo</span>
+                </div>
+                <h3 class="sport-name">Basquete 3x3</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Modalidade rápida e ágil, com estilo de rua e arremessos letais.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Basquete 3x3">Quero Treinar</button>
             </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Futsal">Quero Treinar</button>
-          </div>
 
-          <!-- Handebol -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Quadra</span>
-              <h3 class="sport-name">Handebol</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Força física, garra e determinação em cada disputa de bola.</p>
+            <!-- Handebol -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretores: Wallace (M) / Débora (F)</span>
+                </div>
+                <h3 class="sport-name">Handebol</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Velocidade, passes firmes e força física na disputa pela artilharia.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Handebol">Quero Treinar</button>
             </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Handebol">Quero Treinar</button>
-          </div>
 
-          <!-- Cheerleading -->
-          <div class="lovable-card sport-card">
-            <div>
-              <span class="badge-pill">Performance</span>
-              <h3 class="sport-name">Cheerleading</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Acrobacias, sincronismo e a liderança de animação da torcida.</p>
+            <!-- Futebol Society -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Apenas Masculino</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Gabriel Jr</span>
+                </div>
+                <h3 class="sport-name">Futebol Society</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Jogadas na grama sintética com velocidade, habilidade e passes curtos.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Futebol Society">Quero Treinar</button>
             </div>
-            <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Cheerleading">Quero Treinar</button>
+
+            <!-- Vôlei de Praia -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                </div>
+                <h3 class="sport-name">Vôlei de Praia</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Duplas entrosadas na areia, exigindo resistência e bom posicionamento.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Vôlei de Praia">Quero Treinar</button>
+            </div>
+
+            <!-- Futevôlei -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); color: #fbbf24;">Dupla Mista</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Vitor</span>
+                </div>
+                <h3 class="sport-name">Futevôlei</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Controle de bola de alto nível e jogadas plásticas na areia.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Futevôlei">Quero Treinar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Content: Individuais & Salão -->
+        <div id="tab-individual" class="tab-content" style="display: none;">
+          <div class="sports-grid">
+            <!-- Atletismo -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Gabriel</span>
+                </div>
+                <h3 class="sport-name">Atletismo</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Provas de corrida, velocidade e resistência. Supere seus limites na pista.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Atletismo">Quero Treinar</button>
+            </div>
+
+            <!-- Natação -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Adryann</span>
+                </div>
+                <h3 class="sport-name">Natação</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Foco e velocidade nas piscinas, com provas em diversos estilos.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Natação">Quero Treinar</button>
+            </div>
+
+            <!-- Peteca -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Vitor</span>
+                </div>
+                <h3 class="sport-name">Peteca</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Tradição mineira nas quadras! Agilidade, força e reflexos apurados.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Peteca">Quero Treinar</button>
+            </div>
+
+            <!-- Tênis de Mesa -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                </div>
+                <h3 class="sport-name">Tênis de Mesa</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Concentração extrema e velocidade em duelos táticos e dinâmicos.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Tênis de Mesa">Quero Treinar</button>
+            </div>
+
+            <!-- Truco -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: #60a5fa;">Masc & Fem</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Gabriel Jr (M)</span>
+                </div>
+                <h3 class="sport-name">Truco</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Blefe, diversão e a emoção de gritar Truco na mesa universitária.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Truco">Quero Treinar</button>
+            </div>
+
+            <!-- Sinuca -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); color: #fbbf24;">Dupla Mista</span>
+                </div>
+                <h3 class="sport-name">Sinuca</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Geometria, efeito e precisão na mesa verde com duplas mistas.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Sinuca">Quero Treinar</button>
+            </div>
+
+            <!-- Poker -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                </div>
+                <h3 class="sport-name">Poker</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Estratégia de jogo da mente, paciência, estatística e leitura fria.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Poker">Quero Treinar</button>
+            </div>
+
+            <!-- Xadrez -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretora: Laura</span>
+                </div>
+                <h3 class="sport-name">Xadrez</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Cálculo exato de jogadas, raciocínio lógico e pura tática no tabuleiro.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Xadrez">Quero Treinar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Content: E-sports & Alternativos -->
+        <div id="tab-esports" class="tab-content" style="display: none;">
+          <div class="sports-grid">
+            <!-- EAFC 26 -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Vitor</span>
+                </div>
+                <h3 class="sport-name">EAFC 26</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Competição virtual de futebol digital nos consoles com dinamismo e gols.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="EAFC 26">Quero Treinar</button>
+            </div>
+
+            <!-- League of Legends -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #34d399;">Diretor: Miguel</span>
+                </div>
+                <h3 class="sport-name">League of Legends</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Estratégia MOBA na Summoner's Rift com foco em macro e sinergia.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="League of Legends">Quero Treinar</button>
+            </div>
+
+            <!-- Counter-Strike -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                </div>
+                <h3 class="sport-name">Counter-Strike</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">FPS tático de alta precisão, economia de time e controle de recoil.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Counter-Strike">Quero Treinar</button>
+            </div>
+
+            <!-- Valorant -->
+            <div class="lovable-card sport-card">
+              <div>
+                <div style="display: flex; gap: 6px; margin-bottom: var(--space-2); flex-wrap: wrap;">
+                  <span class="badge-pill" style="padding: 2px 8px; font-size: 0.65rem; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.2); color: #c084fc;">Qualquer Sexo</span>
+                </div>
+                <h3 class="sport-name">Valorant</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Mira precisa e uso estratégico de habilidades especiais de agentes da Riot.</p>
+              </div>
+              <button class="btn btn-outline btn-sm mt-4" data-action="open-sport-modal" data-sport-name="Valorant">Quero Treinar</button>
+            </div>
           </div>
         </div>
       </div>
