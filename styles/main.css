@@ -392,6 +392,22 @@ main, header, footer, .navbar {
   }
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-actions .btn {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav-actions .btn {
+    display: inline-flex;
+  }
+}
+
 .mobile-drawer {
   position: fixed;
   inset: 0;
