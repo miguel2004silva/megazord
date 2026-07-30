@@ -564,11 +564,18 @@ function initBackgroundMusic() {
   const removeInteractionListeners = () => {
     document.removeEventListener('click', tryAutoPlay);
     document.removeEventListener('touchstart', tryAutoPlay);
+    document.removeEventListener('scroll', tryAutoPlay);
+    document.removeEventListener('mousemove', tryAutoPlay);
   };
 
-  // Escuta interações globais para autoplay
+  // Tentar tocar imediatamente ao carregar (se permitido pelo navegador)
+  tryAutoPlay();
+
+  // Escuta interações globais para autoplay o mais rápido possível
   document.addEventListener('click', tryAutoPlay);
   document.addEventListener('touchstart', tryAutoPlay);
+  document.addEventListener('scroll', tryAutoPlay);
+  document.addEventListener('mousemove', tryAutoPlay);
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation(); // Evitar disparar tryAutoPlay ao clicar no próprio botão
