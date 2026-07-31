@@ -506,7 +506,7 @@
                 </span>
               </div>
               <h3 class="event-title">JUV 2026</h3>
-              <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Jogos Universitários de Verão! A Atlética Megazord disputa o título em diversas modalidades esportivas com garra e paixão.</p>
+              <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Jogos Universitários do Vale do Aço! A Atlética Megazord disputa o título em diversas modalidades esportivas com garra e paixão.</p>
               
               <a href="https://www.instagram.com/jogosjuv/" target="_blank" class="btn btn-primary w-full text-center" style="display: block; text-decoration: none;">
                 Ver Detalhes do Evento
@@ -528,7 +528,7 @@
                 </span>
               </div>
               <h3 class="event-title">Recepção dos Calouros</h3>
-              <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Integração oficial dos bixos! Apresentação dos times da atlética, entrega de kits e acolhimento para o início do semestre.</p>
+              <p class="event-desc" style="color: var(--text-muted); font-size: 0.925rem; margin-bottom: 20px;">Integração oficial dos calouros! Apresentação dos times da atlética, entrega de kits e acolhimento para o início do semestre.</p>
               
               <button class="btn btn-primary w-full" data-action="open-ticket-modal" data-event-name="Recepção dos Calouros">
                 Ver Detalhes do Evento
@@ -582,15 +582,15 @@
                 <i data-lucide="award" style="width: 28px; height: 28px; color: #fb923c; flex-shrink: 0;"></i>
                 <div>
                   <h4 style="color: #fff; font-size: 1.05rem;">Campeã Geral Vacalangada 2024</h4>
-                  <p style="color: var(--text-muted); font-size: 0.85rem;">Hegemonia técnica e esportiva reconhecida no Leste Mineiro.</p>
+                  <p style="color: var(--text-muted); font-size: 0.85rem;">Campeonato universitário em Itabira com título de campeã geral conquistado pela Megazord.</p>
                 </div>
               </div>
 
               <div class="lovable-card" style="padding: 16px; display: flex; align-items: center; gap: 14px;">
                 <i data-lucide="medal" style="width: 28px; height: 28px; color: #94a3b8; flex-shrink: 0;"></i>
                 <div>
-                  <h4 style="color: #fff; font-size: 1.05rem;">Vice-campeã JUV 2024 & 2025</h4>
-                  <p style="color: var(--text-muted); font-size: 0.85rem;">Consistência nos Jogos Universitários de Verão.</p>
+                  <h4 style="color: #fff; font-size: 1.05rem;">Vice-campeã JUV (Jogos Universitários do Vale do Aço) 2024 & 2025</h4>
+                  <p style="color: var(--text-muted); font-size: 0.85rem;">Consistência nos Jogos Universitários do Vale do Aço.</p>
                 </div>
               </div>
             </div>
@@ -695,7 +695,7 @@
                   <i data-lucide="calendar" class="komadi-field-icon"></i>
                   <select id="period" class="komadi-input" required>
                     <option value="" disabled selected hidden>Selecione seu Período *</option>
-                    <option value="1º Período (Bixo)">1º Período (Bixo)</option>
+                    <option value="1º Período (Calouro)">1º Período (Calouro)</option>
                     <option value="2º Período">2º Período</option>
                     <option value="3º Período">3º Período</option>
                     <option value="4º Período">4º Período</option>
@@ -708,9 +708,9 @@
               <!-- Modalidades Esportivas (Multi-seleção) -->
               <div class="form-group full-width" style="margin-top: 8px;">
                 <div class="form-section-title">
-                  <i data-lucide="trophy" style="width: 18px; height: 18px; color: #fb923c;"></i>
-                  Modalidade(s) Esportiva(s) de Interesse
-                  <span style="font-size: 0.75rem; color: #60a5fa; margin-left: auto; font-weight: normal;">(Pode selecionar + de 1)</span>
+                  <i data-lucide="trophy" style="width: 18px; height: 18px; color: #fb923c; flex-shrink: 0;"></i>
+                  <span class="form-section-label">Modalidade(s) Esportiva(s) de Interesse</span>
+                  <span class="form-section-badge sport-badge">(Pode selecionar + de 1)</span>
                 </div>
                 <p class="form-section-subtitle">Clique nos esportes que você pratica ou deseja participar dos treinos:</p>
                 <div id="sportsTagGroup" class="tag-pills-container">
@@ -739,9 +739,9 @@
               <!-- Diretorias de Interesse (Multi-seleção) -->
               <div class="form-group full-width" style="margin-top: 4px;">
                 <div class="form-section-title">
-                  <i data-lucide="briefcase" style="width: 18px; height: 18px; color: #34d399;"></i>
-                  Diretoria(s) de Interesse
-                  <span style="font-size: 0.75rem; color: #34d399; margin-left: auto; font-weight: normal;">(Pode selecionar + de 1)</span>
+                  <i data-lucide="briefcase" style="width: 18px; height: 18px; color: #34d399; flex-shrink: 0;"></i>
+                  <span class="form-section-label">Diretoria(s) de Interesse</span>
+                  <span class="form-section-badge directorate-badge">(Pode selecionar + de 1)</span>
                 </div>
                 <p class="form-section-subtitle">Quer fazer parte da organização da Megazord? Escolha as diretorias que deseja integrar:</p>
                 <div id="directorateTagGroup" class="tag-pills-container">
@@ -931,15 +931,22 @@
   <!-- FLOATING MUSIC CONTROLLER -->
   <div id="musicController" class="music-controller-widget">
     <audio id="bgMusic" src="assets/musica_megazord.mp3" loop></audio>
-    <button id="musicToggle" class="music-toggle-btn" aria-label="Alternar música de fundo">
-      <div class="sound-waves">
-        <span class="wave-bar bar-1"></span>
-        <span class="wave-bar bar-2"></span>
-        <span class="wave-bar bar-3"></span>
-        <span class="wave-bar bar-4"></span>
+    <div class="music-controls-wrapper">
+      <button id="musicToggle" class="music-toggle-btn" aria-label="Alternar música de fundo">
+        <div class="sound-waves">
+          <span class="wave-bar bar-1"></span>
+          <span class="wave-bar bar-2"></span>
+          <span class="wave-bar bar-3"></span>
+          <span class="wave-bar bar-4"></span>
+        </div>
+        <span class="music-tooltip">Ativar Trilha</span>
+      </button>
+      <div class="volume-control-pill" title="Ajustar Volume">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.1" aria-label="Volume da música">
+        <span id="volumeValue" class="volume-text">10%</span>
       </div>
-      <span class="music-tooltip">Ativar Trilha</span>
-    </button>
+    </div>
   </div>
 
   <!-- JavaScript App Engine -->

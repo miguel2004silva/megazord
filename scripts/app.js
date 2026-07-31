@@ -548,12 +548,34 @@ function initSportsTabs() {
 function initBackgroundMusic() {
   const audio = document.getElementById('bgMusic');
   const btn = document.getElementById('musicToggle');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const volumeValue = document.getElementById('volumeValue');
   const tooltip = btn?.querySelector('.music-tooltip');
   
   if (!audio || !btn) return;
 
+  // Set default initial volume to 10% (0.1) for soft ambient background sound
+  const initialVolume = 0.1;
+  audio.volume = initialVolume;
+
+  if (volumeSlider) {
+    volumeSlider.value = initialVolume;
+    if (volumeValue) volumeValue.textContent = `${Math.round(initialVolume * 100)}%`;
+
+    volumeSlider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      audio.volume = val;
+      if (volumeValue) volumeValue.textContent = `${Math.round(val * 100)}%`;
+    });
+
+    volumeSlider.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
   // Tentar tocar no primeiro clique na página
   const tryAutoPlay = () => {
+    audio.volume = volumeSlider ? parseFloat(volumeSlider.value) : 0.1;
     audio.play().then(() => {
       btn.classList.add('playing');
       if (tooltip) tooltip.textContent = 'Pausar Trilha';
@@ -584,6 +606,7 @@ function initBackgroundMusic() {
     removeInteractionListeners();
 
     if (audio.paused) {
+      audio.volume = volumeSlider ? parseFloat(volumeSlider.value) : 0.1;
       audio.play();
       btn.classList.add('playing');
       if (tooltip) tooltip.textContent = 'Pausar Trilha';
