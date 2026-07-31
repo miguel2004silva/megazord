@@ -12,17 +12,26 @@
   --bg-card-hover: rgba(30, 41, 59, 0.85);
   --bg-glass-nav: rgba(11, 15, 25, 0.85);
 
-  /* Brand Accents */
+  /* Brand Accents (Radix UI Scale Tailored) */
   --color-primary: #2563eb;
   --color-primary-hover: #1d4ed8;
   --color-accent: #3b82f6;
   --color-cyan: #06b6d4;
+  --color-amber: #f59e0b;
+  --color-violet: #8b5cf6;
   --color-white: #ffffff;
+
+  /* Radix UI Dark Color Scale Steps */
+  --radix-slate-1: #090d16;
+  --radix-slate-2: #111827;
+  --radix-slate-3: #1e293b;
+  --radix-indigo-glow: rgba(37, 99, 235, 0.4);
+  --radix-cyan-glow: rgba(6, 182, 212, 0.35);
 
   /* Borders & Dividers */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-card: rgba(255, 255, 255, 0.12);
-  --border-hover: rgba(59, 130, 246, 0.4);
+  --border-hover: rgba(59, 130, 246, 0.5);
 
   /* Text Colors */
   --text-main: #f8fafc;
@@ -50,11 +59,12 @@
   --radius-lg: 24px;
   --radius-full: 9999px;
 
-  /* Shadows */
+  /* Shadows & Glows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.6);
   --glow-blue: 0 0 30px rgba(37, 99, 235, 0.35);
+  --glow-cyan: 0 0 30px rgba(6, 182, 212, 0.35);
 
   /* Z-Index Hierarchy */
   --z-video-bg: 0;
@@ -71,6 +81,84 @@
   --transition-fast: 150ms var(--ease-out);
   --transition-normal: 250ms var(--ease-out);
 }
+
+/* --- MAGIC UI & UIVERSE SPOTLIGHT / SHIMMER COMPONENTS --- */
+.magic-spotlight-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.magic-spotlight-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(6, 182, 212, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.25);
+}
+
+.magic-shimmer-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.magic-shimmer-badge::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.4) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: magic-shimmer 2.8s infinite;
+}
+
+@keyframes magic-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* --- GLOW BADGE FOR ALL DIRECTORS --- */
+.director-glow-badge {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(6, 182, 212, 0.18) 100%);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  color: #34d399;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.25s var(--ease-out);
+}
+
+.director-glow-badge::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.6) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: magic-shimmer 2.5s infinite;
+}
+
+.director-glow-badge:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.55);
+}
+
 
 /* --- 2. BASE RESET & SCROLLBAR --- */
 *, *::before, *::after {
@@ -608,11 +696,32 @@ main, header, footer, .navbar {
   }
 }
 
+@media (min-width: 768px) {
+  .coordinator-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .sports-grid > .sport-card:last-child:nth-child(2n+1) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sports-grid > .sport-card:last-child:nth-child(3n+1) {
+    grid-column: 2;
+  }
+}
+
 .sport-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 240px;
+  justify-content: flex-start;
+  min-height: 160px;
 }
 
 .sport-name {
@@ -622,6 +731,75 @@ main, header, footer, .navbar {
   color: var(--color-white);
   margin: var(--space-3) 0 var(--space-2) 0;
 }
+
+/* --- MULTI-SELECT TAG PILLS FOR REGISTRATION FORM --- */
+.form-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-section-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.tag-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-4);
+}
+
+.tag-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.tag-pill-btn:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.tag-pill-btn.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.35) 0%, rgba(6, 182, 212, 0.25) 100%);
+  border-color: var(--color-cyan);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.35);
+}
+
+.tag-pill-btn .tag-check-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+}
+
+.tag-pill-btn.active .tag-check-icon {
+  opacity: 1;
+  transform: scale(1);
+  color: var(--color-cyan);
+}
+
 
 /* --- 12. PRODUTOS ("VISTA A COR DA ATLÉTICA") --- */
 .store-grid {

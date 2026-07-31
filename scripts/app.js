@@ -197,85 +197,23 @@ function initCounters() {
   if (statsSection) observer.observe(statsSection);
 }
 
-/* --- 5. FORM VALIDATION & LEAD CAPTURE --- */
+/* --- 5. FORM VALIDATION, MULTI-SELECT & GOOGLE SHEETS ENGINE --- */
 function initFormValidation() {
   const form = document.getElementById('sellerForm');
   if (!form) return;
 
-  // Controle de opções dinâmicas para Tipo de Membro (Atleta / Diretor)
-  const roleTypeEl = document.getElementById('roleType');
-  const subAreaGroupEl = document.getElementById('subAreaGroup');
-  const subAreaLabelEl = document.getElementById('subAreaLabel');
-  const subAreaEl = document.getElementById('subArea');
-
-  if (roleTypeEl && subAreaGroupEl && subAreaEl) {
-    roleTypeEl.addEventListener('change', () => {
-      const val = roleTypeEl.value;
-      subAreaEl.innerHTML = '';
-      
-      if (val === 'atleta') {
-        subAreaGroupEl.style.display = 'block';
-        subAreaLabelEl.textContent = 'Modalidade Esportiva *';
-        subAreaEl.required = true;
-        
-        const options = [
-          { value: '', text: 'Selecione a modalidade' },
-          { value: 'Atletismo', text: 'Atletismo' },
-          { value: 'Basquete 3x3', text: 'Basquete 3x3' },
-          { value: 'Futebol Society', text: 'Futebol Society' },
-          { value: 'Futsal', text: 'Futsal' },
-          { value: 'Handebol', text: 'Handebol' },
-          { value: 'Natação', text: 'Natação' },
-          { value: 'Peteca', text: 'Peteca' },
-          { value: 'Tênis de Mesa', text: 'Tênis de Mesa' },
-          { value: 'Truco', text: 'Truco' },
-          { value: 'Voleibol', text: 'Voleibol' },
-          { value: 'Vôlei de Praia', text: 'Vôlei de Praia' },
-          { value: 'Futevôlei', text: 'Futevôlei' },
-          { value: 'Sinuca', text: 'Sinuca' },
-          { value: 'EAFC 26', text: 'EAFC 26' },
-          { value: 'Poker', text: 'Poker' },
-          { value: 'Xadrez', text: 'Xadrez' },
-          { value: 'Counter-Strike', text: 'Counter-Strike' },
-          { value: 'Valorant', text: 'Valorant' },
-          { value: 'League of Legends', text: 'League of Legends' }
-        ];
-        
-        options.forEach(opt => {
-          const el = document.createElement('option');
-          el.value = opt.value;
-          el.textContent = opt.text;
-          subAreaEl.appendChild(el);
-        });
-      } else if (val === 'diretor') {
-        subAreaGroupEl.style.display = 'block';
-        subAreaLabelEl.textContent = 'Diretoria de Interesse *';
-        subAreaEl.required = true;
-        
-        const options = [
-          { value: '', text: 'Selecione a diretoria' },
-          { value: 'Esportes', text: 'Esportes' },
-          { value: 'Marketing', text: 'Marketing' },
-          { value: 'Produtos', text: 'Produtos' },
-          { value: 'Eventos', text: 'Eventos' },
-          { value: 'Financeiro', text: 'Financeiro' },
-          { value: 'Comunicação', text: 'Comunicação & Redes' }
-        ];
-        
-        options.forEach(opt => {
-          const el = document.createElement('option');
-          el.value = opt.value;
-          el.textContent = opt.text;
-          subAreaEl.appendChild(el);
-        });
-      } else {
-        subAreaGroupEl.style.display = 'none';
-        subAreaEl.required = false;
-      }
+  // Toggle visual de botões tag-pill (Multi-seleção de esportes e diretorias)
+  const tagPillBtns = document.querySelectorAll('.tag-pill-btn');
+  tagPillBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
     });
-  }
+  });
 
-  form.addEventListener('submit', (e) => {
+  // URL Oficial do Google Apps Script fornecido pela diretoria
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_QAoCfptX-VrFuLvutiS2XYYCikjTtztVDDf33xbg1u1jTLWoZs7YP60ugBSkOhM/exec';
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const honeypot = document.getElementById('hp_field');
@@ -284,13 +222,19 @@ function initFormValidation() {
       return;
     }
 
-    const fullName = document.getElementById('fullName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const course = document.getElementById('course').value.trim();
-    const period = document.getElementById('period').value;
-    const roleType = roleTypeEl ? roleTypeEl.value : '';
-    const subArea = subAreaEl ? subAreaEl.value : '';
+    const fullName = document.getElementById('fullName')?.value.trim();
+    const email = document.getElementById('email')?.value.trim();
+    const phone = document.getElementById('phone')?.value.trim();
+    const course = document.getElementById('course')?.value.trim();
+    const period = document.getElementById('period')?.value || '';
+    const motivation = document.getElementById('motivation')?.value.trim();
+
+    // Coleta dos itens selecionados nas tags
+    const selectedSports = Array.from(document.querySelectorAll('#sportsTagGroup .tag-pill-btn.active'))
+      .map(b => b.getAttribute('data-value'));
+
+    const selectedDirectorates = Array.from(document.querySelectorAll('#directorateTagGroup .tag-pill-btn.active'))
+      .map(b => b.getAttribute('data-value'));
 
     if (!fullName || fullName.length < 3) {
       showToast('Por favor, digite seu nome completo.', 'error');
@@ -304,34 +248,70 @@ function initFormValidation() {
       showToast('Por favor, digite seu número de WhatsApp com DDD.', 'error');
       return;
     }
-    if (roleTypeEl && !roleType) {
-      showToast('Por favor, selecione se deseja ser Atleta ou Diretor.', 'error');
+    if (selectedSports.length === 0 && selectedDirectorates.length === 0) {
+      showToast('Selecione pelo menos 1 esporte ou 1 diretoria de interesse!', 'error');
       return;
     }
-    if (subAreaEl && subAreaEl.required && !subArea) {
-      showToast('Por favor, selecione a área ou modalidade.', 'error');
+    if (!motivation) {
+      showToast('Por favor, preencha o campo de motivação.', 'error');
       return;
     }
 
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando Inscrição...';
+      submitBtn.innerHTML = '<span class="inline-flex items-center gap-2">Enviando Inscrição...</span>';
     }
 
-    setTimeout(() => {
-      showToast('Inscrição enviada com sucesso! Nossa equipe entrará em contato.', 'success');
-      form.reset();
-      if (subAreaGroupEl) subAreaGroupEl.style.display = 'none';
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar Inscrição para a Equipe';
-      }
+    const sportsText = selectedSports.length > 0 ? selectedSports.join(', ') : 'Nenhum';
+    const directoratesText = selectedDirectorates.length > 0 ? selectedDirectorates.join(', ') : 'Nenhuma';
+    const timestamp = new Date().toLocaleString('pt-BR');
 
-      const roleDisplay = roleType === 'atleta' ? `Atleta (${subArea})` : `Diretor (${subArea})`;
-      const msg = encodeURIComponent(`Olá! Gostaria de fazer parte da Equipe Megazord como ${roleDisplay}. Meu nome é ${fullName} (${course} - ${period}º Período). #TheLionIsInCharge`);
-      window.open(`https://wa.me/5531999999999?text=${msg}`, '_blank');
-    }, 1200);
+    const payload = {
+      timestamp,
+      nome: fullName,
+      email,
+      telefone: `+55${phone}`,
+      curso: course,
+      periodo: period,
+      esportes: sportsText,
+      diretorias: directoratesText,
+      motivacao: motivation
+    };
+
+    // 1. Salva localmente como backup de segurança
+    const existing = JSON.parse(localStorage.getItem('megazord_inscricoes') || '[]');
+    existing.unshift(payload);
+    localStorage.setItem('megazord_inscricoes', JSON.stringify(existing));
+
+    // 2. Envio automático para a Planilha do Google via Google Apps Script
+    try {
+      await fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('Servidor da planilha temporariamente inalcançável, dados salvos no backup local:', err);
+    }
+
+    showToast('Inscrição enviada com sucesso!', 'success');
+
+    // Limpar formulário e tags ativas
+    form.reset();
+    tagPillBtns.forEach(b => b.classList.remove('active'));
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `
+        <span class="inline-flex items-center gap-2 group">
+          Enviar Inscrição para a Equipe
+          <i data-lucide="arrow-right" class="icon-inline" style="width: 17px; height: 17px; margin-left: 4px;"></i>
+        </span>
+      `;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
   });
 }
 
