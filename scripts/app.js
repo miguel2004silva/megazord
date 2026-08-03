@@ -473,11 +473,9 @@ function initFormValidation() {
       } else {
         if (valueSpan) {
           if (values.length === 1) {
-            valueSpan.textContent = `1 selecionada (${values[0]})`;
-          } else if (values.length === 2) {
-            valueSpan.textContent = `2 selecionadas (${values.join(', ')})`;
+            valueSpan.textContent = values[0];
           } else {
-            valueSpan.textContent = `${values.length} selecionadas (${values[0]}, ${values[1]}...)`;
+            valueSpan.textContent = `${values[0]}...`;
           }
           valueSpan.classList.remove('placeholder');
         }
