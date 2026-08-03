@@ -385,7 +385,7 @@ function initFormValidation() {
   }
 
   // 4. SELECTS CUSTOMIZADOS MULTI-SELEÇÃO PESQUISÁVEIS (MODALIDADES E DIRETORIAS)
-  function initMultiCustomSelect({ wrapperId, triggerId, popoverId, valueId, searchInputId, optionsListId, noResultsId, tagsContainerId, placeholderText }) {
+  function initMultiCustomSelect({ wrapperId, triggerId, popoverId, valueId, searchInputId, optionsListId, noResultsId, tagsContainerId, countTextId, doneBtnId, placeholderText }) {
     const wrapper = document.getElementById(wrapperId);
     const trigger = document.getElementById(triggerId);
     const popover = document.getElementById(popoverId);
@@ -394,6 +394,8 @@ function initFormValidation() {
     const optionsList = document.getElementById(optionsListId);
     const noResults = document.getElementById(noResultsId);
     const tagsContainer = document.getElementById(tagsContainerId);
+    const countTextEl = countTextId ? document.getElementById(countTextId) : null;
+    const doneBtnEl = doneBtnId ? document.getElementById(doneBtnId) : null;
 
     if (!wrapper || !trigger || !optionsList) return { getSelectedValues: () => [], reset: () => {} };
 
@@ -428,6 +430,13 @@ function initFormValidation() {
       popover.addEventListener('click', (e) => e.stopPropagation());
     }
 
+    if (doneBtnEl) {
+      doneBtnEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        wrapper.classList.remove('open');
+      });
+    }
+
     function filterOptions(query) {
       const q = query.trim().toLowerCase();
       let hasMatches = false;
@@ -451,6 +460,10 @@ function initFormValidation() {
       const selectedItems = Array.from(optionsList.querySelectorAll('.custom-select-item.selected'));
       const values = selectedItems.map(i => i.getAttribute('data-value'));
 
+      if (countTextEl) {
+        countTextEl.textContent = `${values.length} selecionada(s)`;
+      }
+
       if (values.length === 0) {
         if (valueSpan) {
           valueSpan.textContent = placeholderText;
@@ -459,7 +472,13 @@ function initFormValidation() {
         if (tagsContainer) tagsContainer.style.display = 'none';
       } else {
         if (valueSpan) {
-          valueSpan.textContent = `${values.length} selecionada(s): ${values.join(', ')}`;
+          if (values.length === 1) {
+            valueSpan.textContent = `1 selecionada (${values[0]})`;
+          } else if (values.length === 2) {
+            valueSpan.textContent = `2 selecionadas (${values.join(', ')})`;
+          } else {
+            valueSpan.textContent = `${values.length} selecionadas (${values[0]}, ${values[1]}...)`;
+          }
           valueSpan.classList.remove('placeholder');
         }
         
@@ -467,7 +486,7 @@ function initFormValidation() {
           tagsContainer.style.display = 'flex';
           tagsContainer.innerHTML = values.map(v => `
             <span class="selected-tag-chip">
-              ${v}
+              <span>${v}</span>
               <button type="button" data-remove-val="${v}" aria-label="Remover">&times;</button>
             </span>
           `).join('');
@@ -518,6 +537,8 @@ function initFormValidation() {
     optionsListId: 'sportsOptionsList',
     noResultsId: 'sportsNoResults',
     tagsContainerId: 'sportsSelectedTags',
+    countTextId: 'sportsCountText',
+    doneBtnId: 'sportsDoneBtn',
     placeholderText: 'Selecione as Modalidades *'
   });
 
@@ -530,6 +551,8 @@ function initFormValidation() {
     optionsListId: 'directorateOptionsList',
     noResultsId: 'directorateNoResults',
     tagsContainerId: 'directorateSelectedTags',
+    countTextId: 'directorateCountText',
+    doneBtnId: 'directorateDoneBtn',
     placeholderText: 'Selecione as Diretorias *'
   });
 
@@ -641,7 +664,7 @@ function initFormValidation() {
       timestamp,
       nome: fullName,
       email,
-      telefone: `+55${phone}`,
+      telefone: `'` + `+55 ${phone}`,
       curso: course,
       periodo: period,
       esportes: sportsText,
