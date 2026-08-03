@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlética Megazord — Energia, União e Competição | Unileste</title>
-  <meta name="description" content="A plataforma oficial da Atlética Megazord para reunir atletas, organizar eventos, vestir o manto e celebrar cada conquista do time. #TheLionIsInCharge" />
+  <title>Atlética Megazord — Aqui na Selva Quem Manda é o Leão | Unileste</title>
+  <meta name="description" content="A plataforma oficial da Atlética Megazord para reunir atletas, organizar eventos, vestir o manto e celebrar cada conquista do time." />
   <meta name="keywords" content="Atlética Megazord, Unileste, Vacalangada, JUV, esportes universitários, manto megazord, produtos atlética" />
   <meta name="theme-color" content="#0b0f19" />
   
   <!-- Canonical & OpenGraph -->
   <link rel="canonical" href="https://atleticamegazord.com.br/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Atlética Megazord — Energia, União e Competição" />
+  <meta property="og:title" content="Atlética Megazord — Aqui na Selva Quem Manda é o Leão" />
   <meta property="og:description" content="A plataforma oficial da Atlética Megazord para reunir atletas, organizar eventos, vestir o manto e celebrar cada conquista do time." />
 
   <!-- Google Fonts: Sora -->
@@ -84,7 +84,7 @@
         <a href="#vendedores" class="btn btn-primary btn-sm">
           <span>Entrar no Time</span>
         </a>
-        <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação" style="display: inline-flex; align-items: center; justify-content: center;">
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação">
           <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
         </button>
       </div>
@@ -97,7 +97,7 @@
       <div class="brand-logo">
         <img src="assets/brand/logo Megazord 1.png" alt="Logo Megazord" style="height: 36px; width: auto;" />
       </div>
-      <button id="drawerClose" class="mobile-toggle" aria-label="Fechar menu" style="display: inline-flex; align-items: center; justify-content: center;">
+      <button id="drawerClose" class="mobile-toggle" aria-label="Fechar menu">
         <i data-lucide="x" style="width: 22px; height: 22px;"></i>
       </button>
     </div>
@@ -129,11 +129,11 @@
         <div style="margin-bottom: var(--space-4);">
           <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px;">
             <i data-lucide="crown" class="icon-inline" style="width: 14px; height: 14px; color: #fb923c;"></i>
-            #TheLionIsInCharge — Unificada Unileste
+            Unificada Unileste
           </span>
         </div>
 
-        <h1 class="hero-title font-display text-gradient">Energia, união e competição.</h1>
+        <h1 class="hero-title font-display text-gradient">Aqui na selva quem manda é o leão.</h1>
         <p class="hero-subtitle">A plataforma oficial da Atlética Megazord para reunir atletas, organizar eventos, vestir o manto e celebrar cada conquista do Leão.</p>
         
         <div class="hero-ctas">
@@ -664,9 +664,10 @@
 
               <!-- E-mail -->
               <div class="form-group">
-                <div class="komadi-field-wrapper">
+                <div class="komadi-field-wrapper" style="position: relative;">
                   <i data-lucide="mail" class="komadi-field-icon"></i>
-                  <input type="email" id="email" class="komadi-input" placeholder="E-mail *" required />
+                  <input type="email" id="email" class="komadi-input" placeholder="E-mail *" required autocomplete="off" />
+                  <div id="emailSuggestions" class="email-autocomplete-popover"></div>
                 </div>
               </div>
 
@@ -677,7 +678,7 @@
                     <i data-lucide="phone" class="komadi-field-icon" style="position: static; transform: none;"></i>
                     <span class="prefix-text">+55</span>
                   </div>
-                  <input type="tel" id="phone" class="komadi-input pl-18" placeholder="DDD + Número *" required />
+                  <input type="tel" id="phone" class="komadi-input pl-18" placeholder="DDD + Número *" required maxlength="15" inputmode="numeric" />
                 </div>
               </div>
 
@@ -689,69 +690,138 @@
                 </div>
               </div>
 
-              <!-- Período -->
+              <!-- Período (Custom Select Pesquisável estilo foto) -->
               <div class="form-group full-width">
-                <div class="komadi-field-wrapper">
-                  <i data-lucide="calendar" class="komadi-field-icon"></i>
-                  <select id="period" class="komadi-input" required>
-                    <option value="" disabled selected hidden>Selecione seu Período *</option>
-                    <option value="1º Período (Calouro)">1º Período (Calouro)</option>
-                    <option value="2º Período">2º Período</option>
-                    <option value="3º Período">3º Período</option>
-                    <option value="4º Período">4º Período</option>
-                    <option value="5º Período ou superior">5º Período ou superior</option>
-                    <option value="Ex-Aluno / Formado">Ex-Aluno / Formado</option>
-                  </select>
+                <input type="hidden" id="period" name="period" required />
+                <div class="custom-select-wrapper" id="periodSelectWrapper">
+                  <div class="komadi-field-wrapper">
+                    <i data-lucide="calendar" class="komadi-field-icon"></i>
+                    <div class="komadi-input custom-select-trigger" id="periodSelectTrigger" tabindex="0" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="custom-select-value placeholder" id="periodSelectValue">Selecione seu Período *</span>
+                      <i data-lucide="chevrons-up-down" class="custom-select-chevron"></i>
+                    </div>
+                  </div>
+
+                  <!-- Dropdown Menu Popover -->
+                  <div class="custom-select-popover" id="periodSelectPopover">
+                    <!-- Campo de Pesquisa -->
+                    <div class="custom-select-search-box">
+                      <i data-lucide="search" class="custom-select-search-icon"></i>
+                      <input type="text" id="periodSearchInput" class="custom-select-search-input" placeholder="PESQUISAR PERÍODO" autocomplete="off" />
+                    </div>
+
+                    <!-- Lista de Opções -->
+                    <ul class="custom-select-options-list" role="listbox" id="periodOptionsList">
+                      <li class="custom-select-item" data-value="1º Período (Calouro)">1º Período (Calouro)</li>
+                      <li class="custom-select-item" data-value="2º Período">2º Período</li>
+                      <li class="custom-select-item" data-value="3º Período">3º Período</li>
+                      <li class="custom-select-item" data-value="4º Período">4º Período</li>
+                      <li class="custom-select-item" data-value="5º Período ou superior">5º Período ou superior</li>
+                      <li class="custom-select-item" data-value="Ex-Aluno / Formado">Ex-Aluno / Formado</li>
+                    </ul>
+
+                    <div class="custom-select-no-results" id="periodNoResults" style="display: none;">
+                      Nenhum período encontrado
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Modalidades Esportivas (Multi-seleção) -->
+              <!-- Modalidades Esportivas (Select Customizado Pesquisável Multi-seleção) -->
               <div class="form-group full-width" style="margin-top: 8px;">
                 <div class="form-section-title">
-                  <i data-lucide="trophy" style="width: 18px; height: 18px; color: #fb923c; flex-shrink: 0;"></i>
+                  <i data-lucide="trophy" style="width: 18px; height: 18px; color: #3b82f6; flex-shrink: 0;"></i>
                   <span class="form-section-label">Modalidade(s) Esportiva(s) de Interesse</span>
                   <span class="form-section-badge sport-badge">(Pode selecionar + de 1)</span>
                 </div>
-                <p class="form-section-subtitle">Clique nos esportes que você pratica ou deseja participar dos treinos:</p>
-                <div id="sportsTagGroup" class="tag-pills-container">
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Futsal"><i data-lucide="check" class="tag-check-icon"></i> Futsal</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Voleibol"><i data-lucide="check" class="tag-check-icon"></i> Voleibol</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Basquete 3x3"><i data-lucide="check" class="tag-check-icon"></i> Basquete 3x3</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Handebol"><i data-lucide="check" class="tag-check-icon"></i> Handebol</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Futebol Society"><i data-lucide="check" class="tag-check-icon"></i> Futebol Society</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Vôlei de Praia"><i data-lucide="check" class="tag-check-icon"></i> Vôlei de Praia</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Futevôlei"><i data-lucide="check" class="tag-check-icon"></i> Futevôlei</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Atletismo"><i data-lucide="check" class="tag-check-icon"></i> Atletismo</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Natação"><i data-lucide="check" class="tag-check-icon"></i> Natação</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Peteca"><i data-lucide="check" class="tag-check-icon"></i> Peteca</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Tênis de Mesa"><i data-lucide="check" class="tag-check-icon"></i> Tênis de Mesa</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Truco"><i data-lucide="check" class="tag-check-icon"></i> Truco</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Sinuca"><i data-lucide="check" class="tag-check-icon"></i> Sinuca</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Poker"><i data-lucide="check" class="tag-check-icon"></i> Poker</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Xadrez"><i data-lucide="check" class="tag-check-icon"></i> Xadrez</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="EAFC 26"><i data-lucide="check" class="tag-check-icon"></i> EAFC 26</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="League of Legends"><i data-lucide="check" class="tag-check-icon"></i> League of Legends</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Counter-Strike"><i data-lucide="check" class="tag-check-icon"></i> Counter-Strike</button>
-                  <button type="button" class="tag-pill-btn" data-type="sport" data-value="Valorant"><i data-lucide="check" class="tag-check-icon"></i> Valorant</button>
+                <div class="custom-select-wrapper" id="sportsSelectWrapper">
+                  <div class="komadi-field-wrapper">
+                    <i data-lucide="trophy" class="komadi-field-icon"></i>
+                    <div class="komadi-input custom-select-trigger" id="sportsSelectTrigger" tabindex="0" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="custom-select-value placeholder" id="sportsSelectValue">Selecione as Modalidades *</span>
+                      <i data-lucide="chevrons-up-down" class="custom-select-chevron"></i>
+                    </div>
+                  </div>
+
+                  <!-- Dropdown Menu Popover -->
+                  <div class="custom-select-popover" id="sportsSelectPopover">
+                    <!-- Campo de Pesquisa -->
+                    <div class="custom-select-search-box">
+                      <i data-lucide="search" class="custom-select-search-icon"></i>
+                      <input type="text" id="sportsSearchInput" class="custom-select-search-input" placeholder="PESQUISAR MODALIDADE" autocomplete="off" />
+                    </div>
+
+                    <!-- Lista de Opções Multi-seleção -->
+                    <ul class="custom-select-options-list" role="listbox" id="sportsOptionsList">
+                      <li class="custom-select-item multi" data-value="Futsal">Futsal</li>
+                      <li class="custom-select-item multi" data-value="Voleibol">Voleibol</li>
+                      <li class="custom-select-item multi" data-value="Basquete 3x3">Basquete 3x3</li>
+                      <li class="custom-select-item multi" data-value="Handebol">Handebol</li>
+                      <li class="custom-select-item multi" data-value="Futebol Society">Futebol Society</li>
+                      <li class="custom-select-item multi" data-value="Vôlei de Praia">Vôlei de Praia</li>
+                      <li class="custom-select-item multi" data-value="Futevôlei">Futevôlei</li>
+                      <li class="custom-select-item multi" data-value="Atletismo">Atletismo</li>
+                      <li class="custom-select-item multi" data-value="Natação">Natação</li>
+                      <li class="custom-select-item multi" data-value="Peteca">Peteca</li>
+                      <li class="custom-select-item multi" data-value="Tênis de Mesa">Tênis de Mesa</li>
+                      <li class="custom-select-item multi" data-value="Truco">Truco</li>
+                      <li class="custom-select-item multi" data-value="Sinuca">Sinuca</li>
+                      <li class="custom-select-item multi" data-value="Poker">Poker</li>
+                      <li class="custom-select-item multi" data-value="Xadrez">Xadrez</li>
+                      <li class="custom-select-item multi" data-value="EAFC 26">EAFC 26</li>
+                      <li class="custom-select-item multi" data-value="League of Legends">League of Legends</li>
+                      <li class="custom-select-item multi" data-value="Counter-Strike">Counter-Strike</li>
+                      <li class="custom-select-item multi" data-value="Valorant">Valorant</li>
+                    </ul>
+
+                    <div class="custom-select-no-results" id="sportsNoResults" style="display: none;">
+                      Nenhuma modalidade encontrada
+                    </div>
+                  </div>
                 </div>
+                <div id="sportsSelectedTags" class="selected-tags-pills-container" style="display: none; margin-top: 8px;"></div>
               </div>
 
-              <!-- Diretorias de Interesse (Multi-seleção) -->
+              <!-- Diretorias de Interesse (Select Customizado Pesquisável Multi-seleção) -->
               <div class="form-group full-width" style="margin-top: 4px;">
                 <div class="form-section-title">
                   <i data-lucide="briefcase" style="width: 18px; height: 18px; color: #34d399; flex-shrink: 0;"></i>
                   <span class="form-section-label">Diretoria(s) de Interesse</span>
                   <span class="form-section-badge directorate-badge">(Pode selecionar + de 1)</span>
                 </div>
-                <p class="form-section-subtitle">Quer fazer parte da organização da Megazord? Escolha as diretorias que deseja integrar:</p>
-                <div id="directorateTagGroup" class="tag-pills-container">
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Esportes"><i data-lucide="check" class="tag-check-icon"></i> Diretoria de Esportes</button>
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Marketing & Redes"><i data-lucide="check" class="tag-check-icon"></i> Marketing & Redes</button>
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Produtos & Vendas"><i data-lucide="check" class="tag-check-icon"></i> Produtos & Vendas</button>
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Eventos & Festas"><i data-lucide="check" class="tag-check-icon"></i> Eventos & Festas</button>
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Financeiro"><i data-lucide="check" class="tag-check-icon"></i> Diretoria Financeira</button>
-                  <button type="button" class="tag-pill-btn" data-type="directorate" data-value="Comunicação & Torcida"><i data-lucide="check" class="tag-check-icon"></i> Comunicação & Torcida</button>
+                <div class="custom-select-wrapper" id="directorateSelectWrapper">
+                  <div class="komadi-field-wrapper">
+                    <i data-lucide="briefcase" class="komadi-field-icon"></i>
+                    <div class="komadi-input custom-select-trigger" id="directorateSelectTrigger" tabindex="0" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="custom-select-value placeholder" id="directorateSelectValue">Selecione as Diretorias *</span>
+                      <i data-lucide="chevrons-up-down" class="custom-select-chevron"></i>
+                    </div>
+                  </div>
+
+                  <!-- Dropdown Menu Popover -->
+                  <div class="custom-select-popover" id="directorateSelectPopover">
+                    <!-- Campo de Pesquisa -->
+                    <div class="custom-select-search-box">
+                      <i data-lucide="search" class="custom-select-search-icon"></i>
+                      <input type="text" id="directorateSearchInput" class="custom-select-search-input" placeholder="PESQUISAR DIRETORIA" autocomplete="off" />
+                    </div>
+
+                    <!-- Lista de Opções Multi-seleção -->
+                    <ul class="custom-select-options-list" role="listbox" id="directorateOptionsList">
+                      <li class="custom-select-item multi" data-value="Esportes">Diretoria de Esportes</li>
+                      <li class="custom-select-item multi" data-value="Marketing & Redes">Marketing & Redes</li>
+                      <li class="custom-select-item multi" data-value="Produtos & Vendas">Produtos & Vendas</li>
+                      <li class="custom-select-item multi" data-value="Eventos & Festas">Eventos & Festas</li>
+                      <li class="custom-select-item multi" data-value="Financeiro">Diretoria Financeira</li>
+                      <li class="custom-select-item multi" data-value="Comunicação & Torcida">Comunicação & Torcida</li>
+                    </ul>
+
+                    <div class="custom-select-no-results" id="directorateNoResults" style="display: none;">
+                      Nenhuma diretoria encontrada
+                    </div>
+                  </div>
                 </div>
+                <div id="directorateSelectedTags" class="selected-tags-pills-container" style="display: none; margin-top: 8px;"></div>
               </div>
 
               <!-- Motivação -->
@@ -849,11 +919,8 @@
         <div class="footer-col">
           <img src="assets/brand/rodape_megazord.png" alt="Atlética Megazord - Unificada Unileste" class="footer-brand-logo" />
           <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 320px; margin-bottom: 16px; line-height: 1.6;">
-            Energia, união e competição. A atlética que representa sua faculdade com paixão.
+            Aqui na selva quem manda é o leão. A atlética que representa sua faculdade com paixão.
           </p>
-          <div style="margin-bottom: 20px;">
-            <span class="badge-pill">#TheLionIsInCharge</span>
-          </div>
           <div class="footer-sponsor">
             <span style="font-size: 0.7rem; color: var(--text-dimmed); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Patrocínio Oficial</span>
             <img src="assets/brand/viva_eventos_logo.jpg" alt="Viva Eventos - Patrocinador Oficial" class="footer-sponsor-logo" />
@@ -925,27 +992,6 @@
     <div class="modal-box">
       <button id="modalClose" class="modal-close" aria-label="Fechar Modal">✕</button>
       <div id="modalContent"></div>
-    </div>
-  </div>
-
-  <!-- FLOATING MUSIC CONTROLLER -->
-  <div id="musicController" class="music-controller-widget">
-    <audio id="bgMusic" src="assets/musica_megazord.mp3" loop></audio>
-    <div class="music-controls-wrapper">
-      <button id="musicToggle" class="music-toggle-btn" aria-label="Alternar música de fundo">
-        <div class="sound-waves">
-          <span class="wave-bar bar-1"></span>
-          <span class="wave-bar bar-2"></span>
-          <span class="wave-bar bar-3"></span>
-          <span class="wave-bar bar-4"></span>
-        </div>
-        <span class="music-tooltip">Ativar Trilha</span>
-      </button>
-      <div class="volume-control-pill" title="Ajustar Volume">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.1" aria-label="Volume da música">
-        <span id="volumeValue" class="volume-text">10%</span>
-      </div>
     </div>
   </div>
 

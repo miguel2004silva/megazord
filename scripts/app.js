@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollEffects();
   initCookieBanner();
   initSportsTabs();
-  initBackgroundMusic();
 
   // Initialize Lucide Icons
   if (typeof lucide !== 'undefined') {
@@ -101,6 +100,12 @@ function initNavbar() {
 
   drawerClose?.addEventListener('click', closeDrawer);
   drawerLinks.forEach(link => link.addEventListener('click', closeDrawer));
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+      closeDrawer();
+    }
+  });
 }
 
 /* --- 2. COUNTDOWN ENGINE --- */
@@ -197,24 +202,354 @@ function initCounters() {
   if (statsSection) observer.observe(statsSection);
 }
 
-/* --- 5. FORM VALIDATION, MULTI-SELECT & GOOGLE SHEETS ENGINE --- */
+/* --- 5. FORM VALIDATION, CUSTOM SELECT, AUTOCOMPLETE & GOOGLE SHEETS ENGINE --- */
 function initFormValidation() {
   const form = document.getElementById('sellerForm');
-  if (!form) return;
+  
+  // 1. MÁSCARA E RESTRIÇÃO ESTRITA DE NÚMERO DE TELEFONE (#phone)
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', (e) => {
+      phoneInput.classList.remove('input-error');
+      let val = e.target.value;
+      // Permite apenas dígitos
+      let digits = val.replace(/\D/g, '');
+      // Restringe estritamente a no máximo 11 dígitos (DDD + 9 dígitos)
+      if (digits.length > 11) {
+        digits = digits.slice(0, 11);
+      }
+      
+      let formatted = '';
+      if (digits.length > 0) {
+        formatted = '(' + digits.slice(0, 2);
+      }
+      if (digits.length >= 3) {
+        formatted += ') ';
+        if (digits.length <= 10) {
+          formatted += digits.slice(2, 6);
+          if (digits.length >= 7) {
+            formatted += '-' + digits.slice(6);
+          }
+        } else {
+          formatted += digits.slice(2, 7);
+          if (digits.length >= 8) {
+            formatted += '-' + digits.slice(7);
+          }
+        }
+      }
+      e.target.value = formatted;
+    });
+  }
 
-  // Toggle visual de botões tag-pill (Multi-seleção de esportes e diretorias)
-  const tagPillBtns = document.querySelectorAll('.tag-pill-btn');
-  tagPillBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('active');
+  // 2. AUTOCOMPLETE DE E-MAIL COM OPÇÕES (@gmail.com, @outlook.com, ETC)
+  const emailInput = document.getElementById('email');
+  const emailSuggestions = document.getElementById('emailSuggestions');
+  const domains = ['@gmail.com', '@outlook.com', '@hotmail.com', '@yahoo.com.br', '@icloud.com', '@live.com'];
+
+  if (emailInput && emailSuggestions) {
+    emailInput.addEventListener('input', () => {
+      emailInput.classList.remove('input-error');
+      const val = emailInput.value;
+      const atIndex = val.indexOf('@');
+
+      if (atIndex !== -1) {
+        const username = val.slice(0, atIndex);
+        const typedDomain = val.slice(atIndex).toLowerCase();
+
+        if (username.length > 0) {
+          const matchingDomains = domains.filter(d => d.toLowerCase().startsWith(typedDomain));
+          
+          if (matchingDomains.length > 0) {
+            emailSuggestions.innerHTML = matchingDomains.map(d => `
+              <div class="email-suggestion-item" data-full-email="${username}${d}">
+                <span>${username}<span class="email-suggestion-domain">${d}</span></span>
+                <i data-lucide="corner-down-left" style="width: 14px; height: 14px; color: #60a5fa;"></i>
+              </div>
+            `).join('');
+            
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            emailSuggestions.classList.add('active');
+
+            // Adiciona evento de clique nas sugestões
+            emailSuggestions.querySelectorAll('.email-suggestion-item').forEach(item => {
+              item.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                emailInput.value = item.getAttribute('data-full-email');
+                emailSuggestions.classList.remove('active');
+              });
+            });
+            return;
+          }
+        }
+      }
+      emailSuggestions.classList.remove('active');
+    });
+
+    emailInput.addEventListener('blur', () => {
+      setTimeout(() => emailSuggestions.classList.remove('active'), 200);
+    });
+  }
+
+  // 3. SELECT DE PERÍODO CUSTOMIZADO PESQUISÁVEL (ESTILO DA FOTO)
+  const periodWrapper = document.getElementById('periodSelectWrapper');
+  const periodTrigger = document.getElementById('periodSelectTrigger');
+  const periodPopover = document.getElementById('periodSelectPopover');
+  const periodValue = document.getElementById('periodSelectValue');
+  const periodHidden = document.getElementById('period');
+  const periodSearchInput = document.getElementById('periodSearchInput');
+  const periodOptionsList = document.getElementById('periodOptionsList');
+  const periodNoResults = document.getElementById('periodNoResults');
+
+  if (periodWrapper && periodTrigger && periodOptionsList) {
+    const toggleDropdown = (e) => {
+      if (e) e.stopPropagation();
+      const isOpen = periodWrapper.classList.contains('open');
+      document.querySelectorAll('.custom-select-wrapper.open').forEach(w => w.classList.remove('open'));
+      
+      if (!isOpen) {
+        periodWrapper.classList.add('open');
+        periodTrigger.classList.remove('input-error');
+        if (periodSearchInput) {
+          periodSearchInput.value = '';
+          filterPeriodOptions('');
+          setTimeout(() => periodSearchInput.focus(), 60);
+        }
+      } else {
+        periodWrapper.classList.remove('open');
+      }
+    };
+
+    periodTrigger.addEventListener('click', toggleDropdown);
+
+    periodTrigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        toggleDropdown(e);
+      }
+    });
+
+    if (periodPopover) {
+      periodPopover.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    function filterPeriodOptions(query) {
+      const q = query.trim().toLowerCase();
+      let hasMatches = false;
+      const items = periodOptionsList.querySelectorAll('.custom-select-item');
+      
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(q)) {
+          item.style.display = 'block';
+          hasMatches = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (periodNoResults) {
+        periodNoResults.style.display = hasMatches ? 'none' : 'block';
+      }
+    }
+
+    if (periodSearchInput) {
+      periodSearchInput.addEventListener('input', (e) => {
+        filterPeriodOptions(e.target.value);
+      });
+    }
+
+    periodOptionsList.querySelectorAll('.custom-select-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const selectedVal = item.getAttribute('data-value');
+        
+        if (periodHidden) periodHidden.value = selectedVal;
+        if (periodValue) {
+          periodValue.textContent = selectedVal;
+          periodValue.classList.remove('placeholder');
+        }
+
+        periodOptionsList.querySelectorAll('.custom-select-item').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+
+        periodWrapper.classList.remove('open');
+        periodTrigger.classList.remove('input-error');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      periodWrapper.classList.remove('open');
+    });
+  }
+
+  // 4. SELECTS CUSTOMIZADOS MULTI-SELEÇÃO PESQUISÁVEIS (MODALIDADES E DIRETORIAS)
+  function initMultiCustomSelect({ wrapperId, triggerId, popoverId, valueId, searchInputId, optionsListId, noResultsId, tagsContainerId, placeholderText }) {
+    const wrapper = document.getElementById(wrapperId);
+    const trigger = document.getElementById(triggerId);
+    const popover = document.getElementById(popoverId);
+    const valueSpan = document.getElementById(valueId);
+    const searchInput = document.getElementById(searchInputId);
+    const optionsList = document.getElementById(optionsListId);
+    const noResults = document.getElementById(noResultsId);
+    const tagsContainer = document.getElementById(tagsContainerId);
+
+    if (!wrapper || !trigger || !optionsList) return { getSelectedValues: () => [], reset: () => {} };
+
+    const toggleDropdown = (e) => {
+      if (e) e.stopPropagation();
+      const isOpen = wrapper.classList.contains('open');
+      document.querySelectorAll('.custom-select-wrapper.open').forEach(w => w.classList.remove('open'));
+      
+      if (!isOpen) {
+        wrapper.classList.add('open');
+        trigger.classList.remove('input-error');
+        if (searchInput) {
+          searchInput.value = '';
+          filterOptions('');
+          setTimeout(() => searchInput.focus(), 60);
+        }
+      } else {
+        wrapper.classList.remove('open');
+      }
+    };
+
+    trigger.addEventListener('click', toggleDropdown);
+
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        toggleDropdown(e);
+      }
+    });
+
+    if (popover) {
+      popover.addEventListener('click', (e) => e.stopPropagation());
+    }
+
+    function filterOptions(query) {
+      const q = query.trim().toLowerCase();
+      let hasMatches = false;
+      optionsList.querySelectorAll('.custom-select-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(q)) {
+          item.style.display = 'flex';
+          hasMatches = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      if (noResults) noResults.style.display = hasMatches ? 'none' : 'block';
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => filterOptions(e.target.value));
+    }
+
+    function updateDisplay() {
+      const selectedItems = Array.from(optionsList.querySelectorAll('.custom-select-item.selected'));
+      const values = selectedItems.map(i => i.getAttribute('data-value'));
+
+      if (values.length === 0) {
+        if (valueSpan) {
+          valueSpan.textContent = placeholderText;
+          valueSpan.classList.add('placeholder');
+        }
+        if (tagsContainer) tagsContainer.style.display = 'none';
+      } else {
+        if (valueSpan) {
+          valueSpan.textContent = `${values.length} selecionada(s): ${values.join(', ')}`;
+          valueSpan.classList.remove('placeholder');
+        }
+        
+        if (tagsContainer) {
+          tagsContainer.style.display = 'flex';
+          tagsContainer.innerHTML = values.map(v => `
+            <span class="selected-tag-chip">
+              ${v}
+              <button type="button" data-remove-val="${v}" aria-label="Remover">&times;</button>
+            </span>
+          `).join('');
+
+          tagsContainer.querySelectorAll('button[data-remove-val]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const valToRemove = btn.getAttribute('data-remove-val');
+              const targetOpt = optionsList.querySelector(`.custom-select-item[data-value="${valToRemove}"]`);
+              if (targetOpt) {
+                targetOpt.classList.remove('selected');
+                updateDisplay();
+              }
+            });
+          });
+        }
+      }
+    }
+
+    optionsList.querySelectorAll('.custom-select-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        item.classList.toggle('selected');
+        updateDisplay();
+        trigger.classList.remove('input-error');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      wrapper.classList.remove('open');
+    });
+
+    return {
+      getSelectedValues: () => Array.from(optionsList.querySelectorAll('.custom-select-item.selected')).map(i => i.getAttribute('data-value')),
+      reset: () => {
+        optionsList.querySelectorAll('.custom-select-item').forEach(i => i.classList.remove('selected'));
+        updateDisplay();
+      }
+    };
+  }
+
+  const sportsSelect = initMultiCustomSelect({
+    wrapperId: 'sportsSelectWrapper',
+    triggerId: 'sportsSelectTrigger',
+    popoverId: 'sportsSelectPopover',
+    valueId: 'sportsSelectValue',
+    searchInputId: 'sportsSearchInput',
+    optionsListId: 'sportsOptionsList',
+    noResultsId: 'sportsNoResults',
+    tagsContainerId: 'sportsSelectedTags',
+    placeholderText: 'Selecione as Modalidades *'
+  });
+
+  const directorateSelect = initMultiCustomSelect({
+    wrapperId: 'directorateSelectWrapper',
+    triggerId: 'directorateSelectTrigger',
+    popoverId: 'directorateSelectPopover',
+    valueId: 'directorateSelectValue',
+    searchInputId: 'directorateSearchInput',
+    optionsListId: 'directorateOptionsList',
+    noResultsId: 'directorateNoResults',
+    tagsContainerId: 'directorateSelectedTags',
+    placeholderText: 'Selecione as Diretorias *'
+  });
+
+  // Limpar erro ao digitar nos campos
+  ['fullName', 'course', 'motivation'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', (e) => {
+      e.target.classList.remove('input-error');
     });
   });
 
-  // URL Oficial do Google Apps Script fornecido pela diretoria
+  if (!form) return;
+
+  // URL Oficial do Google Apps Script
   const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_QAoCfptX-VrFuLvutiS2XYYCikjTtztVDDf33xbg1u1jTLWoZs7YP60ugBSkOhM/exec';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Resetar estilos de erro prévios
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
 
     const honeypot = document.getElementById('hp_field');
     if (honeypot && honeypot.value !== '') {
@@ -222,38 +557,73 @@ function initFormValidation() {
       return;
     }
 
-    const fullName = document.getElementById('fullName')?.value.trim();
-    const email = document.getElementById('email')?.value.trim();
-    const phone = document.getElementById('phone')?.value.trim();
-    const course = document.getElementById('course')?.value.trim();
-    const period = document.getElementById('period')?.value || '';
-    const motivation = document.getElementById('motivation')?.value.trim();
+    const fullNameEl = document.getElementById('fullName');
+    const emailEl = document.getElementById('email');
+    const phoneEl = document.getElementById('phone');
+    const courseEl = document.getElementById('course');
+    const periodHiddenEl = document.getElementById('period');
+    const periodTriggerEl = document.getElementById('periodSelectTrigger');
+    const motivationEl = document.getElementById('motivation');
 
-    // Coleta dos itens selecionados nas tags
-    const selectedSports = Array.from(document.querySelectorAll('#sportsTagGroup .tag-pill-btn.active'))
-      .map(b => b.getAttribute('data-value'));
+    const fullName = fullNameEl?.value.trim() || '';
+    const email = emailEl?.value.trim() || '';
+    const phone = phoneEl?.value.trim() || '';
+    const course = courseEl?.value.trim() || '';
+    const period = periodHiddenEl?.value || '';
+    const motivation = motivationEl?.value.trim() || '';
 
-    const selectedDirectorates = Array.from(document.querySelectorAll('#directorateTagGroup .tag-pill-btn.active'))
-      .map(b => b.getAttribute('data-value'));
+    // Coleta dos itens selecionados nos selects customizados
+    const selectedSports = sportsSelect.getSelectedValues();
+    const selectedDirectorates = directorateSelect.getSelectedValues();
 
+    // VALIDAÇÃO RIGOROSA DE TODOS OS CAMPOS OBRIGATÓRIOS
     if (!fullName || fullName.length < 3) {
-      showToast('Por favor, digite seu nome completo.', 'error');
+      fullNameEl?.classList.add('input-error');
+      fullNameEl?.focus();
+      showToast('Por favor, digite seu nome completo (campo obrigatório).', 'error');
       return;
     }
-    if (!email || !email.includes('@')) {
-      showToast('Por favor, digite um e-mail válido.', 'error');
+
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      emailEl?.classList.add('input-error');
+      emailEl?.focus();
+      showToast('Por favor, digite um e-mail válido com @ e domínio.', 'error');
       return;
     }
-    if (!phone || phone.length < 10) {
-      showToast('Por favor, digite seu número de WhatsApp com DDD.', 'error');
+
+    const rawDigits = phone.replace(/\D/g, '');
+    if (!phone || rawDigits.length < 10) {
+      phoneEl?.classList.add('input-error');
+      phoneEl?.focus();
+      showToast('Por favor, digite um número de WhatsApp válido com DDD (10 ou 11 dígitos).', 'error');
       return;
     }
+
+    if (!course || course.length < 2) {
+      courseEl?.classList.add('input-error');
+      courseEl?.focus();
+      showToast('Por favor, informe seu curso no Unileste (campo obrigatório).', 'error');
+      return;
+    }
+
+    if (!period) {
+      periodTriggerEl?.classList.add('input-error');
+      periodTriggerEl?.focus();
+      showToast('Por favor, selecione seu período de graduação (campo obrigatório).', 'error');
+      return;
+    }
+
     if (selectedSports.length === 0 && selectedDirectorates.length === 0) {
-      showToast('Selecione pelo menos 1 esporte ou 1 diretoria de interesse!', 'error');
+      document.getElementById('sportsSelectTrigger')?.classList.add('input-error');
+      document.getElementById('directorateSelectTrigger')?.classList.add('input-error');
+      showToast('Por favor, selecione pelo menos 1 esporte ou 1 diretoria de interesse!', 'error');
       return;
     }
-    if (!motivation) {
-      showToast('Por favor, preencha o campo de motivação.', 'error');
+
+    if (!motivation || motivation.length < 5) {
+      motivationEl?.classList.add('input-error');
+      motivationEl?.focus();
+      showToast('Por favor, preencha o campo de motivação (campo obrigatório).', 'error');
       return;
     }
 
@@ -279,12 +649,12 @@ function initFormValidation() {
       motivacao: motivation
     };
 
-    // 1. Salva localmente como backup de segurança
+    // Salva localmente como backup de segurança
     const existing = JSON.parse(localStorage.getItem('megazord_inscricoes') || '[]');
     existing.unshift(payload);
     localStorage.setItem('megazord_inscricoes', JSON.stringify(existing));
 
-    // 2. Envio automático para a Planilha do Google via Google Apps Script
+    // Envio para o Google Apps Script
     try {
       await fetch(GOOGLE_SHEET_URL, {
         method: 'POST',
@@ -298,9 +668,18 @@ function initFormValidation() {
 
     showToast('Inscrição enviada com sucesso!', 'success');
 
-    // Limpar formulário e tags ativas
+    // Limpar formulário, select customizado e tags ativas
     form.reset();
-    tagPillBtns.forEach(b => b.classList.remove('active'));
+    if (periodHiddenEl) periodHiddenEl.value = '';
+    const periodValSpan = document.getElementById('periodSelectValue');
+    if (periodValSpan) {
+      periodValSpan.textContent = 'Selecione seu Período *';
+      periodValSpan.classList.add('placeholder');
+    }
+    const periodOpts = document.getElementById('periodOptionsList');
+    periodOpts?.querySelectorAll('.custom-select-item').forEach(i => i.classList.remove('selected'));
+    sportsSelect.reset();
+    directorateSelect.reset();
 
     if (submitBtn) {
       submitBtn.disabled = false;
@@ -374,7 +753,7 @@ function initModals() {
           <button class="btn btn-primary w-full" onclick="
             const size = document.getElementById('prod_size').value;
             const user = document.getElementById('prod_user').value || 'Aluno Unileste';
-            window.open('https://wa.me/5531999999999?text=' + encodeURIComponent('Olá! Quero encomendar ' + '${pName}' + ' (Tamanho: ' + size + ') no valor de ${pPrice}. Meu nome é ' + user + '. #TheLionIsInCharge'), '_blank');
+            window.open('https://wa.me/5531999999999?text=' + encodeURIComponent('Olá! Quero encomendar ' + '${pName}' + ' (Tamanho: ' + size + ') no valor de ${pPrice}. Meu nome é ' + user + '.'), '_blank');
           ">Fazer Pedido no WhatsApp</button>
         </div>
       `);
@@ -420,7 +799,7 @@ function initModals() {
           <button class="btn btn-primary w-full" onclick="
             const name = document.getElementById('sport_athlete_name').value || 'Atleta';
             const pos = document.getElementById('sport_athlete_pos').value || 'Geral';
-            window.open('https://wa.me/5531999999999?text=' + encodeURIComponent('Olá! Quero me inscrever no treino de ${sportName}. Meu nome é ' + name + ' (' + pos + '). #TheLionIsInCharge'), '_blank');
+            window.open('https://wa.me/5531999999999?text=' + encodeURIComponent('Olá! Quero me inscrever no treino de ${sportName}. Meu nome é ' + name + ' (' + pos + ').'), '_blank');
           ">Confirmar no WhatsApp</button>
         </div>
       `);
@@ -541,81 +920,5 @@ function initSportsTabs() {
         targetContent.style.display = 'block';
       }
     });
-  });
-}
-
-/* --- 11. BACKGROUND MUSIC SYSTEM --- */
-function initBackgroundMusic() {
-  const audio = document.getElementById('bgMusic');
-  const btn = document.getElementById('musicToggle');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const volumeValue = document.getElementById('volumeValue');
-  const tooltip = btn?.querySelector('.music-tooltip');
-  
-  if (!audio || !btn) return;
-
-  // Set default initial volume to 10% (0.1) for soft ambient background sound
-  const initialVolume = 0.1;
-  audio.volume = initialVolume;
-
-  if (volumeSlider) {
-    volumeSlider.value = initialVolume;
-    if (volumeValue) volumeValue.textContent = `${Math.round(initialVolume * 100)}%`;
-
-    volumeSlider.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value);
-      audio.volume = val;
-      if (volumeValue) volumeValue.textContent = `${Math.round(val * 100)}%`;
-    });
-
-    volumeSlider.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-  }
-
-  // Tentar tocar no primeiro clique na página
-  const tryAutoPlay = () => {
-    audio.volume = volumeSlider ? parseFloat(volumeSlider.value) : 0.1;
-    audio.play().then(() => {
-      btn.classList.add('playing');
-      if (tooltip) tooltip.textContent = 'Pausar Trilha';
-      removeInteractionListeners();
-    }).catch(err => {
-      console.log('Autoplay recusado pelo navegador. Aguardando interação direta.', err);
-    });
-  };
-
-  const removeInteractionListeners = () => {
-    document.removeEventListener('click', tryAutoPlay);
-    document.removeEventListener('touchstart', tryAutoPlay);
-    document.removeEventListener('scroll', tryAutoPlay);
-    document.removeEventListener('mousemove', tryAutoPlay);
-  };
-
-  // Tentar tocar imediatamente ao carregar (se permitido pelo navegador)
-  tryAutoPlay();
-
-  // Escuta interações globais para autoplay o mais rápido possível
-  document.addEventListener('click', tryAutoPlay);
-  document.addEventListener('touchstart', tryAutoPlay);
-  document.addEventListener('scroll', tryAutoPlay);
-  document.addEventListener('mousemove', tryAutoPlay);
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evitar disparar tryAutoPlay ao clicar no próprio botão
-    removeInteractionListeners();
-
-    if (audio.paused) {
-      audio.volume = volumeSlider ? parseFloat(volumeSlider.value) : 0.1;
-      audio.play();
-      btn.classList.add('playing');
-      if (tooltip) tooltip.textContent = 'Pausar Trilha';
-      showToast('Trilha sonora iniciada', 'success');
-    } else {
-      audio.pause();
-      btn.classList.remove('playing');
-      if (tooltip) tooltip.textContent = 'Ativar Trilha';
-      showToast('Trilha sonora pausada', 'info');
-    }
   });
 }
