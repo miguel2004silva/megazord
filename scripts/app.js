@@ -172,34 +172,42 @@ function initAccordion() {
 /* --- 4. ANIMATED STATS COUNTERS --- */
 function initCounters() {
   const statNumbers = document.querySelectorAll('.stat-number');
-  let animated = false;
+  if (statNumbers.length === 0) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !animated) {
-        animated = true;
-        statNumbers.forEach(counter => {
-          const target = parseInt(counter.getAttribute('data-target') || '0', 10);
-          let count = 0;
-          const duration = 2000;
-          const step = Math.ceil(target / (duration / 30));
+  const animateCounter = (counter) => {
+    if (counter.classList.contains('animated')) return;
+    counter.classList.add('animated');
 
-          const timer = setInterval(() => {
-            count += step;
-            if (count >= target) {
-              counter.textContent = `+${target}`;
-              clearInterval(timer);
-            } else {
-              counter.textContent = `+${count}`;
-            }
-          }, 30);
-        });
+    const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+    let count = 0;
+    const duration = 2000;
+    const step = Math.max(1, Math.ceil(target / (duration / 30)));
+
+    const timer = setInterval(() => {
+      count += step;
+      if (count >= target) {
+        counter.textContent = `+${target}`;
+        clearInterval(timer);
+      } else {
+        counter.textContent = `+${count}`;
       }
-    });
-  }, { threshold: 0.5 });
+    }, 30);
+  };
 
-  const statsSection = document.getElementById('sobre');
-  if (statsSection) observer.observe(statsSection);
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+    statNumbers.forEach(counter => observer.observe(counter));
+  } else {
+    statNumbers.forEach(counter => animateCounter(counter));
+  }
 }
 
 /* --- 5. FORM VALIDATION, CUSTOM SELECT, AUTOCOMPLETE & GOOGLE SHEETS ENGINE --- */
